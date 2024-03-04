@@ -34,7 +34,7 @@ def getAllClientPaisRegionCiudad(pais, region, ciudad):
         ) :
             clientZone.append(val)
     return clientZone
-
+    #mis 5 filtros agregados
 def getAllClienteCodigoPostal():
     clienteCode = []
     for i, val in enumerate(cli.clientes):
