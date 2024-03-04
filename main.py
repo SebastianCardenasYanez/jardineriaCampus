@@ -1,4 +1,4 @@
 import modules.getClients as cliente
 
-print(cliente.getAllClientPaisRegionCiudad("Spain",None,"Madrid"))
+print(cliente.getAllClienteRepVentas(11))
 
