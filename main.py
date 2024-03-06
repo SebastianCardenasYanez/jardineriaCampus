@@ -1,4 +1,5 @@
 import modules.getClients as cliente
-
-print(cliente.getAllClienteRepVentas(11))
+import modules.getOficina as oficina
+import modules.getEmpleados as empleado
+print(empleado.getAllNombresApellidosEmailJefe(7))
 
