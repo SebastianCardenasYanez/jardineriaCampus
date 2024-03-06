@@ -76,11 +76,12 @@ def getAllClienteRepVentas(repVentas):
     return clienteRepVentas
 
 #ejercicio 6
-def getAllClienteNombrePais(pais):
+def getAllClienteNombrePais(Spain):
     clienteNamePais = []
     for val in cli.clientes:
-        if (val.get("pais") == pais):
+        if (val.get("pais") == "Spain"):
             clienteNamePais.append({
-                "nombre_cliente": val.get('nombre_cliente')
+                "nombre_cliente": val.get('nombre_cliente'),
+                "Spain" : val.get("pais")
             })
     return clienteNamePais

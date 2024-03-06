@@ -1,5 +1,6 @@
 import modules.getClients as cliente
 import modules.getOficina as oficina
 import modules.getEmpleados as empleado
-print(empleado.getAllPuestoNombreApellidosEmpleados("Representante Ventas"))
+import modules.getPedido as pedido
+print(pedido.getAllEstadosPedido())
 
