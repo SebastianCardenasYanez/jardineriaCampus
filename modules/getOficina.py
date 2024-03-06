@@ -9,13 +9,13 @@ def getAllCodigoCiudad():
         })
     return codigoCiudad
 
-def getAllCiudadTelefono(pais)
+def getAllCiudadTelefono(pais):
     ciudadTelefono = []
     for val in of.oficina:
         if (val.get("pais") == pais):
             ciudadTelefono.append({
                 "ciudad": val.get("ciudad"),
-                "telefono": val.get("telefono")
+                "telefono": val.get("telefono"),
                 "oficinas" : val.get("cpodigo_oficina"),
                 "pais" : val.get("pais") 
             })
