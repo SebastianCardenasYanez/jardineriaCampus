@@ -74,4 +74,13 @@ def getAllClienteRepVentas(repVentas):
        if (val.get("codigo_empleado_rep_ventas") == repVentas):
            clienteRepVentas.append(val)
     return clienteRepVentas
-    
+
+#ejercicio 6
+def getAllClienteNombrePais(pais):
+    clienteNamePais = []
+    for val in cli.clientes:
+        if (val.get("pais") == pais):
+            clienteNamePais.append({
+                "nombre_cliente": val.get('nombre_cliente')
+            })
+    return clienteNamePais
