@@ -84,3 +84,14 @@ def getAllPedidosRechazados():
                     "estado": val.get ("estado")
                 })
     return pedidoRechazado
+
+#ejercicio 12
+def getAllPedidosEntregados():
+    pedidoEntregados = []
+    for val in ped.pedido:
+        if (val.get("estado") == "Entregado" and val.get("fecha_entrega") is not None):
+                fechaEntregada = "/".join(val.get("fecha_esperada").split("-")[::-1])
+                start = datetime.strptime(fechaEntregada, "%d/%m/%Y")
+                if start.month == 1 : 
+                    pedidoEntregados.append(val)
+    return pedidoEntregados
