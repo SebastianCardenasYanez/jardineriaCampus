@@ -4,5 +4,8 @@ import modules.getOficina as oficina
 import modules.getEmpleados as empleado
 import modules.getPedido as pedidos
 import modules.getPago as pago
-print(tabulate(pago.getAllFormaPago(), tablefmt = 'rounded_grid'))
+import modules.getGamaProducto as gama
+import modules.getProducto as producto
+
+print(tabulate(producto.getAllGamaProductos(), tablefmt = 'rounded_grid'))
 
