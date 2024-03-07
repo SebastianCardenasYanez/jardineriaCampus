@@ -10,7 +10,7 @@ def getAllCodigoClienteAñoPago() :
     return codigoPago
         
 #ejercicio 13
-def getAllFormaDePago() :
+def getAllFormaDePago2008() :
     formaPago = []
     #sorted ()reverse = true
     for val in pag.pago:
@@ -21,3 +21,10 @@ def getAllFormaDePago() :
     return formaPago
         
 #ejercicio 14
+def getAllFormaPago() :
+    formasDePago = set()
+    for val in pag.pago:
+        formasDePago.add(val.get("forma_pago"))
+        
+    return formasDePago
+
