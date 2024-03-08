@@ -20,3 +20,18 @@ def getAllCiudadTelefono(pais):
                 "pais" : val.get("pais") 
             })
     return ciudadTelefono
+
+def menu():
+    print(""" 
+  ___                   _               _            __ _    _           
+ | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   ___ / _(_)__(_)_ _  __ _ 
+ |   / -_) '_ \/ _ \ '_|  _/ -_|_-< / _` / -_) / _ \  _| / _| | ' \/ _` |
+ |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| \___/_| |_\__|_|_||_\__,_|
+         |_|                                                             
+
+          1. obtener todos los codigos y ciudad (codigo y nombre)
+          2. obtener un cliente por el codigo (codigo y nombre)
+          3. obtener toda la informacion de un cliente segun su limite de credito y ciudad perteneciente ()
+""")
+    
+    

@@ -1,4 +1,5 @@
 import storage.cliente as cli
+from tabulate import tabulate
 
 def getAllClientName():
     clienteName = []
@@ -12,16 +13,26 @@ def getAllClientName():
 def getOneClientCodigo(codigo):
     for i,val in enumerate(cli.clientes):
         if(val.get('codigo_cliente')== codigo):
-            return {
+            return [{
                 "codigo_cliente": val.get('codigo_cliente'),
                 "nombre_cliente": val.get('nombre_cliente')
-            }
+            }]
 
 def getAllCLientCreditCiudad(limitCredit, ciudad) :
     clienteCredic= list()
     for val in cli.clientes :
         if (val.get('limite_credito') >= limitCredit and val.get('ciudad') == ciudad) :
-            clienteCredic.append(val)
+            clienteCredic.append({
+                "codigo": val.get('codigo_cliente'),
+                "Responsable" : val.get('codigo_cliente'),
+                "Director" : val.get('codigo_cliente'),
+                "Telefono" : val.get('codigo_cliente'),
+                "Fax" : val.get('codigo_cliente'),
+                "Direcciones" : val.get('codigo_cliente'),
+                "Origen" : val.get('codigo_cliente'),
+                "Codigo del asesor" : val.get('codigo_cliente'),
+                "Credito" : val.get('codigo_cliente')
+            })
     return clienteCredic
     
 def getAllClientPaisRegionCiudad(pais, region, ciudad):
@@ -34,7 +45,9 @@ def getAllClientPaisRegionCiudad(pais, region, ciudad):
         ) :
             clientZone.append(val)
     return clientZone
+
     #mis 5 filtros agregados
+
 def getAllClienteCodigoPostal():
     clienteCode = []
     for i, val in enumerate(cli.clientes):
@@ -85,3 +98,27 @@ def getAllClienteNombrePais(Spain):
                 "Spain" : val.get("pais")
             })
     return clienteNamePais
+
+def menu():
+    print(""" 
+
+  ___                   _               _          _ _         _          
+ | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   __| (_)___ _ _| |_ ___ ___
+ |   / -_) '_ \/ _ \ '_|  _/ -_|_-< / _` / -_) / _| | / -_) ' \  _/ -_|_-<
+ |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| \__|_|_\___|_||_\__\___/__/
+         |_|                                                              
+
+          1. obtener todos los clientes (codigo y nombre)
+          2. obtener un cliente por el codigo (codigo y nombre)
+          3. obtener toda la informacion de un cliente segun su limite de credito y ciudad perteneciente ()
+""")
+    opcion = int(input("\nSeleccione una de las opciones: "))
+    if (opcion == 1):
+        print(tabulate(getAllClientName(), headers="keys",  tablefmt = 'rounded_grid'))
+    elif (opcion == 2):
+        codigoCliente = int(input("Ingrese el codigo del cliente: "))
+        print(tabulate(getOneClientCodigo(codigoCliente), headers="keys",  tablefmt = 'rounded_grid'))
+    elif (opcion == 3):
+        limite = float(input("ingrese el limite de credito de los clientes vque deseas visualisar: "))
+        ciudad = input("ingrese el nomnbre de la ciudad que deseas filtrar los cliente:")
+        print(tabulate(getAllCLientCreditCiudad(limite, ciudad), headers="keys",  tablefmt = 'rounded_grid'))
