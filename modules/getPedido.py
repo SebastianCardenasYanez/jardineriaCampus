@@ -1,9 +1,9 @@
 import storage.pedido as ped
+from tabulate import tabulate
 #ejercicio 7
 def getAllEstadosPedido():
     pedidoEstados = set()
-    for i, val in enumerate(ped.pedido):
-        pedidoEstados.add(val.get("pedido"))
+    for val in ped.pedido:
         pedidoEstados.add(val.get("estado"))
     return pedidoEstados
 
@@ -22,10 +22,10 @@ def getAllPedidosEntregadosAtrasadosDeTiempo():
             diff = end.date() - start.date()
             if diff.days < 0:
                 pedidosEntregado.append({
-                    "codigo_de_pedido": val.get("codigo_pedido"),
-                    "codigo_de_cliente": val.get("codigo_cliente"),
-                    "fecha_esperada": val.get("fecha_esperada"),
-                    "fecha_de_entrega": val.get("fecha_entrega")
+                    "codigo de pedido": val.get("codigo_pedido"),
+                    "codigo de cliente": val.get("codigo_cliente"),
+                    "fecha esperada": val.get("fecha_esperada"),
+                    "fecha de entrega": val.get("fecha_entrega")
                 })
     return pedidosEntregado
 #def getAllPedidosEntregadosAtrasadosDeTiempo():
@@ -64,10 +64,10 @@ def getAllPedidosEntregadosAntesDeTiempo():
             diff = end.date() - start.date()
             if diff.days >= 2:
                 pedidosEntregadosAntes.append({
-                    "codigo_de_pedido": val.get("codigo_pedido"),
-                    "codigo_de_cliente": val.get("codigo_cliente"),
-                    "fecha_esperada": val.get("fecha_esperada"),
-                    "fecha_de_entrega": val.get("fecha_entrega")
+                    "codigo de pedido": val.get("codigo_pedido"),
+                    "codigo de cliente": val.get("codigo_cliente"),
+                    "fecha esperada": val.get("fecha_esperada"),
+                    "fecha de entrega": val.get("fecha_entrega")
                 })
     return pedidosEntregadosAntes
 
@@ -79,8 +79,8 @@ def getAllPedidosRechazados():
         if (val.get("estado") == "Rechazado" and val.get("fecha_entrega") is not None):
             if año.startswith("2009"):
                 pedidoRechazado.append({
-                    "codigo_pedido": val.get ("codigo_pedido"),
-                    "fecha_entrega": val.get ("fecha_entrega"),
+                    "codigo": val.get ("codigo_pedido"),
+                    "fecha": val.get ("fecha_entrega"),
                     "estado": val.get ("estado")
                 })
     return pedidoRechazado
@@ -93,5 +93,37 @@ def getAllPedidosEntregados():
                 fechaEntregada = "/".join(val.get("fecha_esperada").split("-")[::-1])
                 start = datetime.strptime(fechaEntregada, "%d/%m/%Y")
                 if start.month == 1 : 
-                    pedidoEntregados.append(val)
+                    pedidoEntregados.append({
+                        "codigo pedido": val.get("codigo_pedido"),
+                        "estado": val.get("estado"),
+                        "fecha de entrega" : val.get("fecha_entrega"),
+                        "fecha esperada" : val.get("fecha_esperada")
+                    })
     return pedidoEntregados
+
+def menu():
+    print(f""" 
+
+  ___                   _               _                    _ _    _        
+ | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   _ __  ___ __| (_)__| |___ ___
+ |   / -_) '_ \/ _ \ '_|  _/ -_|_-< / _` / -_) | '_ \/ -_) _` | / _` / _ (_-<
+ |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| | .__/\___\__,_|_\__,_\___/__/
+         |_|                                   |_|                           
+
+                                1. Obtener los estados de los pedidos
+                                2. Obtener los pedidos atrasados
+                                3. Obtener los pedidos entregados antes de tiempo
+                                4. Obtener los pedidos rechazados
+                                5. Obtener los pedidos entregados
+""")
+    opcion = int(input("\nSeleccione una de las opciones: "))
+    if (opcion == 1):
+        print(tabulate(getAllEstadosPedido(),headers = "keys", tablefmt = 'rounded_grid'))
+    elif (opcion == 2):
+        print(tabulate(getAllPedidosEntregadosAtrasadosDeTiempo(), headers="keys",  tablefmt = 'rounded_grid'))
+    elif (opcion == 3):
+        print(tabulate(getAllPedidosEntregadosAntesDeTiempo(), headers="keys",  tablefmt = 'rounded_grid'))
+    elif (opcion == 4):
+        print(tabulate(getAllPedidosRechazados(), headers="keys",  tablefmt = 'rounded_grid'))
+    elif (opcion == 5):
+        print(tabulate(getAllPedidosEntregados(), headers="keys",  tablefmt = 'rounded_grid'))

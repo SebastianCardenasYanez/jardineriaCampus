@@ -21,7 +21,7 @@ def menu():
 
                                 1. cliente
                                 2. oficina
-                                3. cliente
+                                3. empleados
                                 4. pedidos
 """)
     opcion = int(input("\nSeleccione una de las opciones: "))

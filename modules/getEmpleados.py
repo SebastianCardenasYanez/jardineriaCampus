@@ -1,4 +1,5 @@
 import storage.empleado as em
+from tabulate import tabulate
 
 def getAllNombresApellidosEmailJefe(codigo):
     nombreApellidoEmail = []
@@ -33,3 +34,21 @@ def getAllPuestoNombreApellidosEmpleados(puesto):
                 "apellidos" : f"{val.get('apellido1')}{val.get('apellido2')}"
             })
     return puestoEmpleado            
+
+def menu():
+    print(f""" 
+        
+  ___                   _               _                      _             _        
+ | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   ___ _ __  _ __| |___ __ _ __| |___ ___
+ |   / -_) '_ \/ _ \ '_|  _/ -_|_-< / _` / -_) / -_) '  \| '_ \ / -_) _` / _` / _ (_-<
+ |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| \___|_|_|_| .__/_\___\__,_\__,_\___/__/
+         |_|                                             |_|                          
+
+                                1. Obtener los datos del jefe
+                                2. Obtener los nombres de los empleados
+""")
+    opcion = int(input("\nSeleccione una de las opciones: "))
+    if (opcion == 1):
+        print(tabulate(getAllNombresApellidosEmailJefe(1), headers="keys",  tablefmt = 'rounded_grid'))
+    elif (opcion == 2):
+        print(tabulate(getAllPuestoNombreApellidosEmpleados("Representante Ventas"), headers="keys",  tablefmt = 'rounded_grid'))

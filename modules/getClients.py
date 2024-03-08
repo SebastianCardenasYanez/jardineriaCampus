@@ -24,14 +24,14 @@ def getAllCLientCreditCiudad(limitCredit, ciudad) :
         if (val.get('limite_credito') >= limitCredit and val.get('ciudad') == ciudad) :
             clienteCredic.append({
                 "codigo": val.get('codigo_cliente'),
-                "Responsable" : val.get('codigo_cliente'),
+                "Responsable" : (val.get('nombre_contacto'), val.get('apellido_contacto')),
                 "Director" : val.get('codigo_cliente'),
-                "Telefono" : val.get('codigo_cliente'),
-                "Fax" : val.get('codigo_cliente'),
-                "Direcciones" : val.get('codigo_cliente'),
-                "Origen" : val.get('codigo_cliente'),
-                "Codigo del asesor" : val.get('codigo_cliente'),
-                "Credito" : val.get('codigo_cliente')
+                "Telefono" : val.get('telefono'),
+                "Fax" : val.get('fax'),
+                "Direcciones" : (val.get('linea_direccion1'), val.get('linea_direccion2')),
+                "Origen" : (val.get('pais'), val.get('ciudad')),
+                "Codigo del asesor" : val.get('codigo_empleado_rep_ventas'),
+                "Credito" : val.get('limite_credito')
             })
     return clienteCredic
     
@@ -104,7 +104,7 @@ def menu():
 
   ___                   _               _          _ _         _          
  | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   __| (_)___ _ _| |_ ___ ___
- |   / -_) '_ \/ _ \ '_|  _/ -_|_-< / _` / -_) / _| | / -_) ' \  _/ -_|_-<
+ |   / -_| '_ \/ _ \ '_|  _/ -_|_-< / _` / -_| / _| | / -_) ' \  _/ -_|_-<
  |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| \__|_|_\___|_||_\__\___/__/
          |_|                                                              
 
