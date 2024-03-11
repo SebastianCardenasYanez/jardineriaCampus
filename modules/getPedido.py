@@ -102,28 +102,38 @@ def getAllPedidosEntregados():
     return pedidoEntregados
 
 def menu():
-    print(f""" 
+    while True:
+        print(f""" 
 
-  ___                   _               _                    _ _    _        
- | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   _ __  ___ __| (_)__| |___ ___
- |   / -_) '_ \/ _ \ '_|  _/ -_|_-< / _` / -_) | '_ \/ -_) _` | / _` / _ (_-<
- |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| | .__/\___\__,_|_\__,_\___/__/
-         |_|                                   |_|                           
+    ___                   _               _                    _ _    _        
+    | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   _ __  ___ __| (_)__| |___ ___
+    |   / -_) '_ \/ _ \ '_|  _/ -_|_-< / _` / -_) | '_ \/ -_) _` | / _` / _ (_-<
+    |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| | .__/\___\__,_|_\__,_\___/__/
+            |_|                                   |_|                           
 
-                                1. Obtener los estados de los pedidos
-                                2. Obtener los pedidos atrasados
-                                3. Obtener los pedidos entregados antes de tiempo
-                                4. Obtener los pedidos rechazados
-                                5. Obtener los pedidos entregados
-""")
-    opcion = int(input("\nSeleccione una de las opciones: "))
-    if (opcion == 1):
-        print(tabulate(getAllEstadosPedido(),headers = "keys", tablefmt = 'rounded_grid'))
-    elif (opcion == 2):
-        print(tabulate(getAllPedidosEntregadosAtrasadosDeTiempo(), headers="keys",  tablefmt = 'rounded_grid'))
-    elif (opcion == 3):
-        print(tabulate(getAllPedidosEntregadosAntesDeTiempo(), headers="keys",  tablefmt = 'rounded_grid'))
-    elif (opcion == 4):
-        print(tabulate(getAllPedidosRechazados(), headers="keys",  tablefmt = 'rounded_grid'))
-    elif (opcion == 5):
-        print(tabulate(getAllPedidosEntregados(), headers="keys",  tablefmt = 'rounded_grid'))
+                                    1. Obtener los estados de los pedidos
+                                    2. Obtener los pedidos atrasados
+                                    3. Obtener los pedidos entregados antes de tiempo
+                                    4. Obtener los pedidos rechazados
+                                    5. Obtener los pedidos entregados
+                                    0. Regresar al menu principal
+
+    """)
+        opcion = int(input("\nSeleccione una de las opciones: "))
+        if (opcion == 1):
+            print(tabulate(getAllEstadosPedido(),headers = "keys", tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 2):
+            print(tabulate(getAllPedidosEntregadosAtrasadosDeTiempo(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 3):
+            print(tabulate(getAllPedidosEntregadosAntesDeTiempo(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 4):
+            print(tabulate(getAllPedidosRechazados(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 5):
+            print(tabulate(getAllPedidosEntregados(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 0):
+            break

@@ -1,5 +1,6 @@
 import storage.cliente as cli
 from tabulate import tabulate
+import sys
 
 def getAllClientName():
     clienteName = []
@@ -100,7 +101,8 @@ def getAllClienteNombrePais(Spain):
     return clienteNamePais
 
 def menu():
-    print(""" 
+    while True: 
+        print(""" 
 
   ___                   _               _          _ _         _          
  | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   __| (_)___ _ _| |_ ___ ___
@@ -108,17 +110,58 @@ def menu():
  |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| \__|_|_\___|_||_\__\___/__/
          |_|                                                              
 
-          1. obtener todos los clientes (codigo y nombre)
-          2. obtener un cliente por el codigo (codigo y nombre)
-          3. obtener toda la informacion de un cliente segun su limite de credito y ciudad perteneciente ()
+          0. Resgresar al menu principal
+          1. Obtener todos los clientes (codigo y nombre)
+          2. Obtener un cliente por el codigo (codigo y nombre)
+          3. Obtener toda la informacion de un cliente segun su limite de credito y ciudad perteneciente ()
+          4. Obtener el pais, region y ciudad de los clientes
+          5. Obtener todos los codigos postales de los clientes
+          6. Obtener los Faxs de los clientes 
+          7. Obtener todos los nuemros de telefomo de los clientes
+          8. Obtener los nombres y apellidos de los contactos de los clientes
+          9. Obtener el representante de ventas
+          10.Obtener los clientes de España
 """)
-    opcion = int(input("\nSeleccione una de las opciones: "))
-    if (opcion == 1):
-        print(tabulate(getAllClientName(), headers="keys",  tablefmt = 'rounded_grid'))
-    elif (opcion == 2):
-        codigoCliente = int(input("Ingrese el codigo del cliente: "))
-        print(tabulate(getOneClientCodigo(codigoCliente), headers="keys",  tablefmt = 'rounded_grid'))
-    elif (opcion == 3):
-        limite = float(input("ingrese el limite de credito de los clientes vque deseas visualisar: "))
-        ciudad = input("ingrese el nomnbre de la ciudad que deseas filtrar los cliente:")
-        print(tabulate(getAllCLientCreditCiudad(limite, ciudad), headers="keys",  tablefmt = 'rounded_grid'))
+        opcion = int(input("\nSeleccione una de las opciones: "))
+        if (opcion == 1):
+            print(tabulate(getAllClientName(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 2):
+            codigoCliente = int(input("Ingrese el codigo del cliente: "))
+            print(tabulate(getOneClientCodigo(codigoCliente), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 3):
+            limite = float(input("ingrese el limite de credito de los clientes vque deseas visualisar: "))
+            ciudad = input("ingrese el nomnbre de la ciudad que deseas filtrar los cliente:")
+            print(tabulate(getAllCLientCreditCiudad(limite, ciudad), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 4):
+            pais = input("Ingrese el pais: ")
+            sys.argv[^C.run_command]
+            region = input("Ingrese la region: ")
+            ciudad = input("Ingrese la cudad: ")
+            print(tabulate(getAllClientPaisRegionCiudad(pais, region, ciudad), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 5):
+            print(tabulate(getAllClienteCodigoPostal(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 6):
+            print(tabulate(getAllClienteFax(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 7):
+            print(tabulate(getAllClientePhone(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 8):
+            print(tabulate(getAllClienteContactoDatos(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 9):
+            repVentas = int(input("Ingrese el codigo del representante de ventas: "))
+            print(tabulate(getAllClienteRepVentas(repVentas), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 10):
+            codigoCliente = int(input("Ingrese el codigo del cliente: "))
+            Spain = input("Ingrese el pais: ")
+            print(tabulate(getAllClienteNombrePais(Spain), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 0):
+            break
