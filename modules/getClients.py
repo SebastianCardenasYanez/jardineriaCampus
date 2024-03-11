@@ -127,17 +127,28 @@ def menu():
             print(tabulate(getAllClientName(), headers="keys",  tablefmt = 'rounded_grid'))
             break
         elif (opcion == 2):
+            try:
+                entrada = input("Ingresa Ctrl + c para ir a menu: ")
+            except KeyboardInterrupt:
+                menu()
             codigoCliente = int(input("Ingrese el codigo del cliente: "))
             print(tabulate(getOneClientCodigo(codigoCliente), headers="keys",  tablefmt = 'rounded_grid'))
             break
         elif (opcion == 3):
+            try:
+                entrada = input("Ingresa Ctrl + c para ir a menu: ")
+            except KeyboardInterrupt:
+                menu()
             limite = float(input("ingrese el limite de credito de los clientes vque deseas visualisar: "))
             ciudad = input("ingrese el nomnbre de la ciudad que deseas filtrar los cliente:")
             print(tabulate(getAllCLientCreditCiudad(limite, ciudad), headers="keys",  tablefmt = 'rounded_grid'))
             break
         elif (opcion == 4):
+            try:
+                entrada = input("Ingresa Ctrl + c para ir a menu: ")
+            except KeyboardInterrupt:
+                menu()
             pais = input("Ingrese el pais: ")
-            sys.argv[^C.run_command]
             region = input("Ingrese la region: ")
             ciudad = input("Ingrese la cudad: ")
             print(tabulate(getAllClientPaisRegionCiudad(pais, region, ciudad), headers="keys",  tablefmt = 'rounded_grid'))
@@ -155,10 +166,18 @@ def menu():
             print(tabulate(getAllClienteContactoDatos(), headers="keys",  tablefmt = 'rounded_grid'))
             break
         elif (opcion == 9):
+            try:
+                entrada = input("Ingresa Ctrl + c para ir a menu: ")
+            except KeyboardInterrupt:
+                menu()
             repVentas = int(input("Ingrese el codigo del representante de ventas: "))
             print(tabulate(getAllClienteRepVentas(repVentas), headers="keys",  tablefmt = 'rounded_grid'))
             break
         elif (opcion == 10):
+            try:
+                entrada = input("Ingresa Ctrl + c para ir a menu: ")
+            except KeyboardInterrupt:
+                menu()
             codigoCliente = int(input("Ingrese el codigo del cliente: "))
             Spain = input("Ingrese el pais: ")
             print(tabulate(getAllClienteNombrePais(Spain), headers="keys",  tablefmt = 'rounded_grid'))
