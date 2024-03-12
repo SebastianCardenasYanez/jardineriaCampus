@@ -1,6 +1,7 @@
 import storage.cliente as cli
 from tabulate import tabulate
-import sys
+import storage.empleado as emple
+import storage.pago as pag
 
 def getAllClientName():
     clienteName = []
@@ -100,6 +101,56 @@ def getAllClienteNombrePais(Spain):
             })
     return clienteNamePais
 
+#ejercicio 16
+def getAllClienteMadridCodigo():
+    clienteCiudad = []
+    for val in cli.clientes:
+        codigoRep = val.get("codigo_empleado_rep_ventas")   
+        if (val.get("ciudad") == "Madrid"):
+            if codigoRep != None and (codigoRep >= 11 and codigoRep <= 30 ):
+                clienteCiudad.append({
+                    "ciudad" : val.get("ciudad"),
+                    "codigo empleado" : val.get("codigo_empleado_rep_ventas")
+                })
+    return clienteCiudad
+
+#ejerecicio 1 2da parte
+def getAllClienteNombreRepVentas():
+    cliNomRep = []
+    for val in cli.clientes:
+        for empl in emple.empleados:
+            if (val.get("codigo_empleado_rep_ventas") == empl.get("codigo_empleado")):
+                cliNomRep.append({
+                    "nombre del cliente": val.get("nombre_cliente"),
+                    "nombre representante" : empl.get("nombre"),
+                    "apellido" : empl.get("apellido1") and empl.get("apellido2")
+                })
+    return cliNomRep
+
+#ejercicio 2 2da parte
+def getAllCLientePago():
+    clientepago = []
+    for val in cli.clientes:
+        for rep in emple.empleados:
+            for pay in pag.pago:
+                if (val.get("codigo_cliente") == pay.get("codigo_cliente") and val.get("codigo_empleado_rep_ventas") == rep.get("codigo_empleado")):
+                    clientepago.append({
+                        "nombre cliente": val.get("nombre_cliente"),
+                        "nombre representante": rep.get("nombre")
+                    })
+    return clientepago
+
+#ejercicio 3 2da parte
+def getAllCLienteNoPago():
+    clienteNopago = set()
+    for val in cli.clientes:
+        for rep in emple.empleados:
+            for pay in pag.pago:
+                if (val.get("codigo_cliente") != pay.get("codigo_cliente") and val.get("codigo_empleado_rep_ventas") == rep.get("codigo_empleado")):
+                    clienteNopago.add(str(val.get("nombre_cliente")))
+                    clienteNopago.add(str(rep.get("nombre")))
+    return clienteNopago
+    
 def menu():
     while True: 
         print(""" 
@@ -121,6 +172,10 @@ def menu():
           8. Obtener los nombres y apellidos de los contactos de los clientes
           9. Obtener el representante de ventas
           10.Obtener los clientes de España
+          11.Obtener los codigos de los representantes de ventas de Madrid
+          12.Obtener el nombre del cliente y de su representante de ventas
+          13.Obrtener el nombre del cliente y de su representante de ventas si han hecho un pago
+          14.Obrtener el nombre del cliente y de su representante de ventas si no han hecho un pago
 """)
         opcion = int(input("\nSeleccione una de las opciones: "))
         if (opcion == 1):
@@ -181,6 +236,18 @@ def menu():
             codigoCliente = int(input("Ingrese el codigo del cliente: "))
             Spain = input("Ingrese el pais: ")
             print(tabulate(getAllClienteNombrePais(Spain), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 11):
+            print(tabulate(getAllClienteMadridCodigo(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 12):
+            print(tabulate(getAllClienteNombreRepVentas(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 13):
+            print(tabulate(getAllCLientePago(), headers="keys",  tablefmt = 'rounded_grid'))
+            break
+        elif (opcion == 14):
+            print(tabulate(getAllCLienteNoPago(), headers="keys",  tablefmt = 'rounded_grid'))
             break
         elif (opcion == 0):
             break
