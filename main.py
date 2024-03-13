@@ -7,50 +7,55 @@ import modules.getPago as pago
 import modules.getGamaProducto as gama
 import modules.getProducto as producto
 
+if (__name__ == "__main__"):
+
 #print(tabulate(producto.getAllStockPriceGama("Ornamentales", 100), headers="keys", tablefmt = 'rounded_grid'))
 
-def menu():
-    while True:
-        print(f""" 
-        
-    __  ___                    ____       _            _             __
-   /  |/  /__  ____  __  __   / __ \_____(_)___  _____(_)___  ____ _/ /
-  / /|_/ / _ \/ __ \/ / / /  / /_/ / ___/ / __ \/ ___/ / __ \/ __ `/ / 
- / /  / /  __/ / / / /_/ /  / ____/ /  / / / / / /__/ / /_/ / /_/ / /  
-/_/  /_/\___/_/ /_/\__,_/  /_/   /_/  /_/_/ /_/\___/_/ .___/\__,_/_/   
-                                                    /_/                
+    def menu():
+        while True:
+            print(f""" 
+            
+        __  ___                    ____       _            _             __
+       /  |/  /__  ____  __  __   / __ \_____(_)___  _____(_)___  ____ _/ /
+      / /|_/ / _ \/ __ \/ / / /  / /_/ / ___/ / __ \/ ___/ / __ \/ __ `/ / 
+     / /  / /  __/ / / / /_/ /  / ____/ /  / / / / / /__/ / /_/ / /_/ / /  
+    /_/  /_/\___/_/ /_/\__,_/  /_/   /_/  /_/_/ /_/\___/_/ .___/\__,_/_/   
+                                                        /_/                
 
-                                1. Cliente
-                                2. Oficina
-                                3. Empleados
-                                4. Pedidos
-                                0. Salir
-""")
-        opcion = int(input("\nSeleccione una de las opciones: "))
-        if (opcion == 1):
-            cliente.menu()
-        elif (opcion == 2):
-            oficina.menu()
-        elif (opcion == 3):
-            empleado.menu()
-        elif (opcion == 4):
-            pedidos.menu()
-        elif (opcion == 0):
-            print("""
+                                    1. Cliente
+                                    2. Oficina
+                                    3. Empleados
+                                    4. Pedidos
+                                    5. Producto
+                                    0. Salir
+    """)
+            opcion = int(input("\nSeleccione una de las opciones: "))
+            if (opcion == 1):
+                cliente.menu()
+            elif (opcion == 2):
+                oficina.menu()
+            elif (opcion == 3):
+                empleado.menu()
+            elif (opcion == 4):
+                pedidos.menu()
+            elif (opcion == 5):
+                producto.menu()
+            elif (opcion == 0):
+                print("""
 
- _    _            _                                                   _                _                
-| |  | |          | |                                     _           | |              (_)_              
-| |  | |   _  ____| |_   _ ____    ____   ____ ___  ____ | |_  ___    | | _   ____  ___ _| |_  ___   ___ 
- \ \/ / | | |/ _  ) | | | / _  |  |  _ \ / ___) _ \|  _ \|  _)/ _ \   | || \ / _  )/___) |  _)/ _ \ /___)
-  \  /| |_| ( (/ /| |\ V ( ( | |  | | | | |  | |_| | | | | |_| |_| |  | |_) | (/ /|___ | | |_| |_| |___ |
-   \/  \____|\____)_| \_/ \_||_|  | ||_/|_|   \___/|_| |_|\___)___/   |____/ \____|___/|_|\___)___/(___/ 
-                                  |_|                                                                    
+     _    _            _                                                   _                _                
+    | |  | |          | |                                     _           | |              (_)_              
+    | |  | |   _  ____| |_   _ ____    ____   ____ ___  ____ | |_  ___    | | _   ____  ___ _| |_  ___   ___ 
+     \ \/ / | | |/ _  ) | | | / _  |  |  _ \ / ___) _ \|  _ \|  _)/ _ \   | || \ / _  )/___) |  _)/ _ \ /___)
+      \  /| |_| ( (/ /| |\ V ( ( | |  | | | | |  | |_| | | | | |_| |_| |  | |_) | (/ /|___ | | |_| |_| |___ |
+       \/  \____|\____)_| \_/ \_||_|  | ||_/|_|   \___/|_| |_|\___)___/   |____/ \____|___/|_|\___)___/(___/ 
+                                      |_|                                                                    
 
-                  
-""")
-            break
+                    
+    """)
+                break
 
-menu()
+    menu()
 
 #import sys
 #for nombre, objeto in sys.modules.items():

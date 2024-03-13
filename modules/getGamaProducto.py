@@ -1,8 +1,17 @@
-import storage.gama_producto as gam
+
+import json
+import requests
+
 #ejercicio 15
-def getAllGamaProducto ():
-    gamaProducto = []
-    for val in gam.gama_producto: 
+def getAllGama():
+    #json-server storage/producto.json -b 5502
+    peticion = requests.get("http://172.16.100.126:5502")
+    data = peticion.json()
+    return data
+
+def getAllNombre():
+    gamaNombre = []
+    for val in getAllGama(): 
         if ("gama") == "Ornamentales":
-            gamaProducto.append(val.get("gama"))
-    return gamaProducto
+            gamaNombre.append(val.get("gama"))
+    return gamaNombre
