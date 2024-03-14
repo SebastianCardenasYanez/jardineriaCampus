@@ -1,9 +1,16 @@
-import storage.oficina as of
 from tabulate import tabulate
+import requests
+import json
+
+def getAllDataOficina():
+    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
+    #json-server storage/producto.json -b 5505
+    data = peticion.json()
+    return data
 
 def getAllCodigoCiudad():
     codigoCiudad = []
-    for val in of.oficina:
+    for val in getAllDataOficina():
         codigoCiudad.append({
             "codigo": val.get("codigo_oficina"),
             "ciudad": val.get("ciudad")
@@ -12,7 +19,7 @@ def getAllCodigoCiudad():
 
 def getAllCiudadTelefono(pais):
     ciudadTelefono = []
-    for val in of.oficina:
+    for val in getAllDataOficina():
         if (val.get("pais") == pais):
             ciudadTelefono.append({
                 "ciudad": val.get("ciudad"),

@@ -1,9 +1,16 @@
-import storage.empleado as em
 from tabulate import tabulate
+import requests
+import json
+
+def getAllDataEmpleados():
+    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
+    #json-server storage/producto.json -b 5506 
+    data = peticion.json()
+    return data
 
 def getAllNombresApellidosEmailJefe(codigo):
     nombreApellidoEmail = []
-    for val in em.empleados:
+    for val in getAllDataEmpleados():
         if (val.get("codigo_jefe") == codigo):
             nombreApellidoEmail.append({
                 "nombre" : val.get("nombre"),
@@ -15,7 +22,7 @@ def getAllNombresApellidosEmailJefe(codigo):
 #ejercicio 4
 def getAllPuestoNombreApellidosEmailJefe(jefe):
     puestoJefe = []
-    for val in em.empleados:
+    for val in getAllDataEmpleados():
         if val.get("puesto") == jefe:
             puestoJefe.append({
                 "nombre" : val.get("nombre"),
@@ -27,7 +34,7 @@ def getAllPuestoNombreApellidosEmailJefe(jefe):
 #ejercicio 5
 def getAllPuestoNombreApellidosEmpleados(puesto):
     puestoEmpleado = []
-    for val in em.empleados:
+    for val in getAllDataEmpleados():
         if val.get("puesto") != puesto:
             puestoEmpleado.append({
                 "nombre" : val.get("nombre"),

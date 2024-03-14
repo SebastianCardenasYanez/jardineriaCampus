@@ -1,10 +1,18 @@
-import storage.pedido as ped
-import json
+#import storage.pedido as ped
 from tabulate import tabulate
+import requests
+import json
+
+def getAllDataPedidos():
+    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
+    #json-server storage/producto.json -b 5503 
+    data = peticion.json()
+    return data
+
 #ejercicio 7
 def getAllEstadosPedido():
     pedidoEstados = set()
-    for val in ped.pedido:
+    for val in getAllDataPedidos():
         pedidoEstados.add(val.get("estado"))
     return pedidoEstados
 
@@ -12,7 +20,7 @@ def getAllEstadosPedido():
 from datetime import datetime
 def getAllPedidosEntregadosAtrasadosDeTiempo():
     pedidosEntregado = list()
-    for val in ped.pedido:
+    for val in getAllDataPedidos():
         if (val.get("estado") == "Entregado" and val.get("fecha_entrega") == None):
             val["fecha_entrega"] = val.get("fecha_esperada")
         if (val.get("estado") == "Entregado"):
@@ -54,7 +62,7 @@ def getAllPedidosEntregadosAtrasadosDeTiempo():
 #ejercicio 10
 def getAllPedidosEntregadosAntesDeTiempo():
     pedidosEntregadosAntes = list()
-    for val in ped.pedido:
+    for val in getAllDataPedidos():
         if (val.get("estado") == "Entregado" and val.get("fecha_entrega") == None):
             val["fecha_entrega"] = val.get("fecha_esperada")
         if (val.get("estado") == "Entregado"):
@@ -75,7 +83,7 @@ def getAllPedidosEntregadosAntesDeTiempo():
 #ejercicio 11
 def getAllPedidosRechazados():
     pedidoRechazado = []
-    for val in ped.pedido:
+    for val in getAllDataPedidos():
         año = val.get("fecha_entrega")
         if (val.get("estado") == "Rechazado" and val.get("fecha_entrega") is not None):
             if año.startswith("2009"):
@@ -89,7 +97,7 @@ def getAllPedidosRechazados():
 #ejercicio 12
 def getAllPedidosEntregados():
     pedidoEntregados = []
-    for val in ped.pedido:
+    for val in getAllDataPedidos():
         if (val.get("estado") == "Entregado" and val.get("fecha_entrega") is not None):
                 fechaEntregada = "/".join(val.get("fecha_esperada").split("-")[::-1])
                 start = datetime.strptime(fechaEntregada, "%d/%m/%Y")

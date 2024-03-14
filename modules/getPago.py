@@ -1,8 +1,17 @@
-import storage.pago as pag
+from tabulate import tabulate
+import requests
+import json
+
+def getAllDataPagos():
+    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
+    #json-server storage/producto.json -b 5504
+    data = peticion.json()
+    return data
+
 #ejercicio 8
 def getAllCodigoClienteAñoPago() :
     codigoPago = set()
-    for val in pag.pago:
+    for val in getAllDataPagos():
         año = val.get("fecha_pago")
         if año.startswith("2008"):
             codigoPago.add(val.get('fecha_pago'))
@@ -13,7 +22,7 @@ def getAllCodigoClienteAñoPago() :
 def getAllFormaDePago2008() :
     formaPago = []
     #sorted ()reverse = true
-    for val in pag.pago:
+    for val in getAllDataPagos():
         año = val.get("fecha_pago")
         forma = val.get("forma_pago")
         if año.startswith("2008") and forma == "PayPal":
@@ -23,7 +32,7 @@ def getAllFormaDePago2008() :
 #ejercicio 14
 def getAllFormaPago() :
     formasDePago = set()
-    for val in pag.pago:
+    for val in getAllDataPagos():
         formasDePago.add(val.get("forma_pago"))
         
     return formasDePago

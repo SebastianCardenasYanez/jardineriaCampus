@@ -3,6 +3,8 @@ import requests
 from tabulate import tabulate
 import os
 import modules.getGamaProducto as gP
+
+
 def postProducto():
     producto = {
         "codigo_producto": input("Ingrese el codigo del producto: "),
@@ -16,7 +18,7 @@ def postProducto():
         "precio_proveedor": int(input("Ingrse el precio del proveedor: "))
     }
     headers = {'Content-type' : 'aplication/json', 'charset' : 'UTF-8'}
-    peticion = requests.post("http://172.16.100.126:5501",headers=headers data=json.dumps(producto))
+    peticion = requests.post("http://172.16.100.126:5501",headers=headers, data=json.dumps(producto))
     res = peticion.json()
     res["Mensaje"] = "Producto guardado"
     return res
