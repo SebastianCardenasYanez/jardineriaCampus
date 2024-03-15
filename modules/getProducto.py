@@ -12,6 +12,10 @@ def getAllData():
    
     return data
 
+def getProductoCodigo (codigo):
+    for val in getAllData():
+        if (val.get('codigo_producto') == codigo):
+            return [val]
 
 #ejercicio 15
 def getAllStockPriceGama (gama, stock):

@@ -9,7 +9,7 @@ def getAllDataClientes():
     return data
 
 def getAllDataEmpleados():
-    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
+    peticion = requests.get("http://127.0.0.1:5506") #falta arreglar las url el visual no deja crearlos
     #json-server storage/producto.json -b 5506 
     data = peticion.json()
     return data
