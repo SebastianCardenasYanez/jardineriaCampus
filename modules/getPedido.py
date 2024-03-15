@@ -9,12 +9,17 @@ def getAllDataPedidos():
     data = peticion.json()
     return data
 
+def getPedidoCodigo(codigo):
+    for val in getAllDataPedidos():
+        if val.get("codigo_pedido") == codigo:
+            return [val]
+
 #ejercicio 7
 def getAllEstadosPedido():
     pedidoEstados = set()
     for val in getAllDataPedidos():
         pedidoEstados.add(val.get("estado"))
-    return pedidoEstados
+    return [pedidoEstados]
 
 #ejemplo profesor
 from datetime import datetime

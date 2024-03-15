@@ -8,6 +8,8 @@ def getAllDataPagos():
     data = peticion.json()
     return data
 
+
+
 #ejercicio 8
 def getAllCodigoClienteAñoPago() :
     codigoPago = set()
@@ -35,5 +37,5 @@ def getAllFormaPago() :
     for val in getAllDataPagos():
         formasDePago.add(val.get("forma_pago"))
         
-    return formasDePago
+    return [formasDePago]
 

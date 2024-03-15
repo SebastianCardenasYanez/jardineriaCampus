@@ -38,6 +38,7 @@ def postProducto():
 
 
 
+
     #producto = {
     #    "codigo_producto": input("Ingrese el codigo del producto: "),
     #    "nombre": input("Ingrese el nombre del producto: "),
@@ -49,11 +50,11 @@ def postProducto():
     #    "precio_venta": int(input("Ingrse el precio de ventas: ")),
     #    "precio_proveedor": int(input("Ingrse el precio del proveedor: "))
     #}
-    #headers = {'Content-type' : 'aplication/json', 'charset' : 'UTF-8'}
-    #peticion = requests.post("http://172.16.100.126:5501",headers=headers, data=json.dumps(producto))
-    #res = peticion.json()
-    #res["Mensaje"] = "Producto guardado"
-    #return res
+    headers = {'Content-type' : 'aplication/json', 'charset' : 'UTF-8'}
+    peticion = requests.post("http://172.16.100.126:5501",headers=headers, data=json.dumps(producto))
+    res = peticion.json()
+    res["Mensaje"] = "Producto guardado"
+    return res
 
 
 def menu():
@@ -61,13 +62,15 @@ def menu():
         os.system
         print(f"""
 
-  ___                   _                             _         _          
- | _ \___ _ __  ___ _ _| |_ ___ ___  _ __ _ _ ___  __| |_  _ __| |_ ___ ___
- |   / -_) '_ \/ _ \ '_|  _/ -_|_-< | '_ \ '_/ _ \/ _` | || / _|  _/ _ (_-<
- |_|_\___| .__/\___/_|  \__\___/__/ | .__/_| \___/\__,_|\_,_\__|\__\___/__/
-         |_|                        |_|                                    
 
-            1. Obtener todos los porductos de una categoria ordenando sus precios de venta
+    _      _       _      _    _               _               _                        _         _          
+   /_\  __| |_ __ (_)_ _ (_)__| |_ _ _ __ _ __(_)___ _ _    __| |___   _ __ _ _ ___  __| |_  _ __| |_ ___ ___
+  / _ \/ _` | '  \| | ' \| (_-|  _| '_/ _` / _| / _ \ ' \  / _` / -_) | '_ \ '_/ _ \/ _` | || / _|  _/ _ (_-<
+ /_/ \_\__,_|_|_|_|_|_||_|_/__/\__|_| \__,_\__|_\___/_||_| \__,_\___| | .__/_| \___/\__,_|\_,_\__|\__\___/__/
+                                                                      |_|                                    
+
+
+            1. Agregar un uevo producto
             0. Salir
               
               """)
