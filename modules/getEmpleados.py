@@ -8,6 +8,13 @@ def getAllDataEmpleados():
     data = peticion.json()
     return data
 
+def getAllPuestos():
+    Puestos = set()
+    for val in getAllDataEmpleados():
+        if(val.get("puesto")):
+            Puestos.add(val.get("puesto"))
+    return [Puestos]
+
 def getAllNombresApellidosEmailJefe(codigo):
     nombreApellidoEmail = []
     for val in getAllDataEmpleados():
@@ -41,6 +48,7 @@ def getAllPuestoNombreApellidosEmpleados(puesto):
                 "apellidos" : f"{val.get('apellido1')}{val.get('apellido2')}"
             })
     return puestoEmpleado            
+
 
 def menu():
     while True:

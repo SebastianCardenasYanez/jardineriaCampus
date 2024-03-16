@@ -26,7 +26,7 @@ def postPago():
                         Pago["id_transaccion"] = id
                         break
                 else:
-                    raise Exception("El nombre no comple con el estandar establecido")
+                    raise Exception("El id no comple con el estandar establecido")
                 
             if (not Pago.get("fecha_pago")):
                 fecha = input("Ingrese la fecha en la que se realizo el pago: ")
@@ -34,7 +34,7 @@ def postPago():
                         Pago["id_transaccion"] = id
                         break
                 else:
-                    raise Exception("El nombre no comple con el estandar establecido")
+                    raise Exception("La fecha no comple con el estandar establecido")
                 
             if(not Pago.get("total")):
                 total = int(input("Ingrese el codigo del cliente que realizo el pago: "))
