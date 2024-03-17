@@ -5,29 +5,127 @@ from tabulate import tabulate
 import os
 
 def postClients():
-    oficina = {}
+    clientes = {}
     while True:
         try:
-            if(not oficina.get("codigo_oficina")):
-                codigo = input("Ingrese el codigo de la oficina: ")
-                if (re.match(r'^[A-Z]{3}-[A-Z]{2}$', codigo)is not None):
-                    oficina['codigo_Oficina'] = codigo
+            if(not clientes.get("codigo_clientes")):
+                codigo = int(input("Ingrese el codigo del cliente que realizo el pago: "))
+                if codigo is not None:
+                   clientes['codigo_producto'] = codigo
                 else : 
                     raise Exception("El codigo no comple con el estandar establecido ")
                 
-            if (not oficina.get("ciudad")):
-                ciudad = input("Ingrese la ciudad de la ofcina: ")
-                if (re.match(r'^[A-Z][a-z]*\s*)+$', ciudad)is not None):
-                    oficina["nombre"] = ciudad
+            if (not clientes.get("nombre_cliente")):
+                nombreCli = input("Ingrese el nombre del empleado: ")
+                if (re.match(r'^[A-Z][a-z]*\s*)+$', nombreCli)is not None):
+                    clientes["nombre_cliente"] = nombreCli
                     break
                 else:
-                        raise Exception("El nombre no comple con el estandar establecido")
+                    raise Exception("El nombre no comple con el estandar establecido")
+
+            if (not clientes.get("nombre_contacto")):
+                nombreCon = input("Ingrese el nombre del empleado: ")
+                if (re.match(r'^[A-Z][a-z]*\s*)+$', nombreCon)is not None):
+                    clientes["nombre_contacto"] = nombreCon
+                    break
+                else:
+                    raise Exception("El nombre no comple con el estandar establecido")
+
+            if (not clientes.get("apellido_contacto")):
+                apellido = input("Ingrese el primer apellido del empleado: ")
+                if (re.match(r'^[A-Z][a-z]*)+$', apellido)is not None):
+                    clientes["apellido_contacto"] = apellido
+                    break
+                else:
+                    raise Exception("El nombre no comple con el estandar establecido")
+
+            if(not clientes.get("telefono")):
+                tel = input("Ingrese la id de la transaccion: ")
+                if (re.match(r'^[0-9]{10}$', tel)is not None):
+                        clientes["telefono"] = tel
+                        break
+                else:
+                    raise Exception("El id no comple con el estandar establecido")
+
+            if(not clientes.get("fax")):
+                tel = input("Ingrese la id de la transaccion: ")
+                if (re.match(r'^[0-9]{10}$', tel)is not None):
+                        clientes["telefono"] = tel
+                        break
+                else:
+                    raise Exception("El id no comple con el estandar establecido")
+
+           if(not clientes.get("linea_direccion1")):
+                direc1 = input("Ingrese la id de la transaccion: ")
+                if (re.match(r'^[A-Z][a-z][0-9]*\s*)$', direc1)is not None):
+                        clientes["telefono"] = direc1
+                        break
+                else:
+                    raise Exception("El id no comple con el estandar establecido")
+
+            if(not clientes.get("linea_direccion2")):
+                direc2 = input("Ingrese la id de la transaccion: ")
+                if (re.match(r'^[A-Z][a-z][0-9]*\s*)$', direc2)is not None):
+                        clientes["telefono"] = direc2
+                        break
+                elif direc2 == None :
+                    clientes['fecha_esperada'] = direc2
+
+                else:
+                    raise Exception("El id no comple con el estandar establecido")
+
+            if(not clientes.get("ciudad")):
+                ciudad = input("Ingrese la ciudad de la ofcina: ")
+                if (re.match(r'^[A-Z][a-z]*\s*)+$', ciudad)is not None):
+                    clientes["nombre"] = ciudad
+                    break
+                else:
+                        raise Exception("La ciudad no comple con el estandar establecido")
+                
+            if(not clientes.get("region")):
+                region = input("Ingrese la region de la ofcina: ")
+                if (re.match(r'^[A-Z][a-z])+$', region)is not None):
+                    clientes["region"] = region
+                    break
+                elif region == None :
+                    clientes['fecha_esperada'] = region
+                else:
+                    raise Exception("La region no comple con el estandar establecido")
+            
+            if(not clientes.get("pais")):
+                pais = input("Ingrese el pais de la ofcina: ")
+                if (re.match(r'^[A-Z][a-z])+$', pais)is not None):
+                    clientes["pais"] = pais
+                    break
+                else:
+                    raise Exception("El pais no comple con el estandar establecido")
+            
+            if(not clientes.get("codigo_postal")):
+                codpos = input("Ingrese el codigo postal de la clientes: ")
+                if (re.match(r'^[A-Z]{3}-[A-Z]{2}$', codpos)is not None):
+                    clientes['codigo_postal'] = codpos
+                else : 
+                    raise Exception("El codigo no comple con el estandar establecido ")
+
+            if(not clientes.get("codigo_empleado_rep_ventas")):
+                codigo = int(input("Ingrese el codigo del cliente que realizo el pago: "))
+                if codigo is not None:
+                   clientes['codigo_producto'] = codigo
+                else : 
+                    raise Exception("El codigo no comple con el estandar establecido ")
+                
+            if(not clientes.get("limite_credito")):
+                codigo = int(input("Ingrese el codigo del cliente que realizo el pago: "))
+                if codigo is not None:
+                   clientes['codigo_producto'] = codigo
+                else : 
+                    raise Exception("El codigo no comple con el estandar establecido ")
         except Exception as error: 
-            print(error)
-        print(oficina)
+        print(error)
+    print(clientes)
 
 
-    peticion = requests.post("http://172.16.100.126:5501", data=json.dumps(oficina))
+    peticion = requests.post("http://172.16.100.126:5501", data=json.dumps(clientes))
 #falta la url bien hecha ..
     res = peticion.json()
     res["Mensaje"] = "Producto guardado"
