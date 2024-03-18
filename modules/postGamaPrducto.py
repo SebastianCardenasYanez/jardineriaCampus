@@ -3,35 +3,49 @@ import re
 import requests
 from tabulate import tabulate
 import os
+import getGamaProducto as gGP
 
 def postGamaProducto():
-    oficina = {}
+    gamaProducto = {}
     while True:
         try:
-            if(not oficina.get("codigo_oficina")):
-                codigo = input("Ingrese el codigo de la oficina: ")
-                if (re.match(r'^[A-Z]{3}-[A-Z]{2}$', codigo)is not None):
-                    oficina['codigo_Oficina'] = codigo
-                else : 
-                    raise Exception("El codigo no comple con el estandar establecido ")
-                
-            if (not oficina.get("ciudad")):
-                ciudad = input("Ingrese la ciudad de la ofcina: ")
-                if (re.match(r'^[A-Z][a-z]*\s*)+$', ciudad)is not None):
-                    oficina["nombre"] = ciudad
+            if (not gamaProducto.get("gama")):
+                gama = gGP.getGamas()[int(input("Selecione la gama:\n"+"".join([f"\t{i}. {val}\n" for i, val in enumerate(gGP.getGamas())])))]
+                gamaProducto['gama'] = gama
+                break
+
+            if (not gamaProducto.get("descripcion_texto")):
+                descript = input("Ingrese la descripcion de texto de la ofcina: ")
+                if (re.match(r'^[A-Z][a-z]*\s*)+$', descript)is not None):
+                    gamaProducto["descripcion_texto"] = descript
                     break
+                elif descript == None :
+                    gamaProducto['fecha_esperada'] = descript
                 else:
-                        raise Exception("El nombre no comple con el estandar establecido")
+                    raise Exception("El nombre no comple con el estandar establecido")
+            
+            if(gamaProducto.get("descripcion_html")):
+                descriph = input("Ingrese la descripcion de texto de la ofcina: ")
+                if descriph == None:
+                    gamaProducto['descripcion_html'] = descriph
+            
+            if(gamaProducto.get("imagen")):
+                imagen = input("Ingrese la descripcion de texto de la ofcina: ")
+                if imagen == None:
+                    gamaProducto['imagen'] = imagen
+
+            
         except Exception as error: 
             print(error)
-        print(oficina)
+        print(gamaProducto)
 
 
-    peticion = requests.post("http://172.16.100.126:5501", data=json.dumps(oficina))
+    peticion = requests.post("http://172.16.100.126:5501", data=json.dumps(gamaProducto))
 #falta la url bien hecha ..
     res = peticion.json()
     res["Mensaje"] = "Producto guardado"
     return res
+
 
 
 def menu():

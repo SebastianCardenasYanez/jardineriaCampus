@@ -55,7 +55,7 @@ def postClients():
                 else:
                     raise Exception("El id no comple con el estandar establecido")
 
-           if(not clientes.get("linea_direccion1")):
+            if(not clientes.get("linea_direccion1")):
                 direc1 = input("Ingrese la id de la transaccion: ")
                 if (re.match(r'^[A-Z][a-z][0-9]*\s*)$', direc1)is not None):
                         clientes["telefono"] = direc1
@@ -121,7 +121,7 @@ def postClients():
                 else : 
                     raise Exception("El codigo no comple con el estandar establecido ")
         except Exception as error: 
-        print(error)
+         print(error)
     print(clientes)
 
 

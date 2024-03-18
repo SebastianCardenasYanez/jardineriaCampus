@@ -53,6 +53,12 @@ def getAllStockPriceGama (gama, stock):
         # return val.get("precio_venta")
     return condiciones
 
+def getGamas():
+    gamas = set()
+    for val in getAllData():
+        gamas.add(val.get("gama"))
+    return [gamas]
+
 def menu():
     while True: 
         print(f"""

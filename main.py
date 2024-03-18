@@ -1,5 +1,6 @@
 from tabulate import tabulate
 import os 
+import json
 import modules.getClients as cliente
 import modules.getOficina as oficina
 import modules.getEmpleados as empleado
@@ -12,7 +13,15 @@ import modules.postProducto as CRUDproducto
 
 
 #print(tabulate(producto.getAllStockPriceGama("Ornamentales", 100), headers="keys", tablefmt = 'rounded_grid'))
-
+with open("storage/producto.json", "r") as f:
+    fichero = f.read()
+    data = json.loads(fichero)
+    for i, val in enumerate(data):
+        data[i]["id"] = (i+1)
+    data = json.dumps(data, indent=4).encode("utf-8")
+    with open("storage/producto.json", "wb+") as f1:
+        f1.write(data)
+        f1.close()
 
 
 def menuProducto():

@@ -7,6 +7,8 @@ import modules.getGamaProducto as gG
 import modules.getProducto as gP
 
 
+
+
 def postProducto():
     producto = {}
     while True:
@@ -29,10 +31,46 @@ def postProducto():
                     break
                 else:
                         raise Exception("El nombre no comple con el estandar establecido")
+            
+            if (not producto.get("gama")):
+                gama = gP.getGamas()[int(input("Selecione la gama:\n"+"".join([f"\t{i}. {val}\n" for i, val in enumerate(gGP.getGamas())])))]
+                producto['gama'] = gama
+                break
+
+            if ():
+
+            if ():
+
+            if ():
+
+            if ():
+
+            if ():
+            
+            if ():
 
         except Exception as error: 
             print(error)
     print(producto)
+
+def deleteProducto():
+    data = gP.getProductoCodigo(id)
+    if (len(data)):
+        peticion = requests.delete(f"/productos/{id}")
+        if(peticion.status_code == 204):
+            data.append({"message" : "producto eliminado correctamente"})
+            return{
+                "data" : data,
+                "status" : peticion.status_code
+            }
+    else : 
+        return {
+            "body" : [{
+                "menssage" : "producto no  encontrado",
+                "id": id
+            }],
+            "status" : 400
+        }
 
 
 

@@ -15,3 +15,9 @@ def getAllNombre():
         if ("gama") == "Ornamentales":
             gamaNombre.append(val.get("gama"))
     return gamaNombre
+
+def getGamas():
+    gamas = set()
+    for val in getAllGama():
+        gamas.add(val.get("gama"))
+    return [gamas]
