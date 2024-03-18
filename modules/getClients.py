@@ -3,20 +3,20 @@ import requests
 import json
 
 def getAllDataClientes():
-    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
-    #json-server storage/producto.json -b 5507 
+    peticion = requests.get("http://172.16.104.23:5507") #falta arreglar las url el visual no deja crearlos
+    #json-server storage/cliente.json -b 5507 
     data = peticion.json()
     return data
 
 def getAllDataEmpleados():
-    peticion = requests.get("http://127.0.0.1:5506") #falta arreglar las url el visual no deja crearlos
-    #json-server storage/producto.json -b 5506 
+    peticion = requests.get("http://172.16.104.23:5506") #falta arreglar las url el visual no deja crearlos
+    #json-server storage/empleado.json -b 5506 
     data = peticion.json()
     return data
 
 def getAllDataPagos():
-    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
-    #json-server storage/producto.json -b 5504
+    peticion = requests.get("http://172.16.104.23:5504") #falta arreglar las url el visual no deja crearlos
+    #json-server storage/pago.json -b 5504
     data = peticion.json()
     return data
 

@@ -3,7 +3,7 @@ import requests
 import json
 
 def getAllDataPagos():
-    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
+    peticion = requests.get("http://172.16.104.23:5504") #falta arreglar las url el visual no deja crearlos
     #json-server storage/producto.json -b 5504
     data = peticion.json()
     return data

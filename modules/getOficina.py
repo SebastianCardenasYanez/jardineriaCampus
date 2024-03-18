@@ -3,7 +3,7 @@ import requests
 import json
 
 def getAllDataOficina():
-    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
+    peticion = requests.get("http://172.16.104.23:5505") #falta arreglar las url el visual no deja crearlos
     #json-server storage/producto.json -b 5505
     data = peticion.json()
     return data

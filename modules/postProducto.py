@@ -33,43 +33,83 @@ def postProducto():
                         raise Exception("El nombre no comple con el estandar establecido")
             
             if (not producto.get("gama")):
-                gama = gP.getGamas()[int(input("Selecione la gama:\n"+"".join([f"\t{i}. {val}\n" for i, val in enumerate(gGP.getGamas())])))]
+                gama = gP.getGamas()[int(input("Selecione la gama:\n"+"".join([f"\t{i}. {val}\n" for i, val in enumerate(gP.getGamas())])))]
                 producto['gama'] = gama
                 break
 
-            if ():
+            if (not producto.get("dimensiones")):
+                dim = input("Ingrese el codigo del producto: ")
+                if (re.match(r'^[0-9]{2}-[0-9]{2}$', dim)is not None):
+                    producto['dimensiones'] = dim
 
-            if ():
+            if (not producto.get("proveedor")):
+                proveedor = input("Ingrese el nombre del producto: ")
+                if (re.match(r'^[A-Z][a-z]*\s*.*)+$', proveedor)is not None):
+                    producto["proveedor"] = proveedor
+                    break
+                else:
+                        raise Exception("El nombre no comple con el estandar establecido")
 
-            if ():
+            if (not producto.get("proveedor")):
+                proveedor = input("Ingrese el nombre del producto: ")
+                if (re.match(r'^[A-Z][a-z]*\s*.*)+$', proveedor)is not None):
+                    producto["proveedor"] = proveedor
+                    break
+                else:
+                        raise Exception("El nombre no comple con el estandar establecido")
 
-            if ():
+            if (not producto.get("cantidad_en_stock")):
+                stock = int(input("Ingrese el nombre del producto: "))
+                if stock is not None:
+                    producto["cantidad_en_stock"] = stock
+                    break
+                else:
+                    raise Exception("El nombre no comple con el estandar establecido")
 
-            if ():
-            
-            if ():
+            if (not producto.get("precio_venta")):
+                precio = int(input("Ingrese el nombre del producto: "))
+                if precio is not None:
+                    producto["precio_venta"] = precio
+                    break
+                else:
+                    raise Exception("El nombre no comple con el estandar establecido")
+
+            if (not producto.get("precio_proveedor")):
+                proveedor = int(input("Ingrese el nombre del producto: "))
+                if stock is not None:
+                    producto["precio_proveedor"] = proveedor
+                    break
+                else:
+                    raise Exception("El nombre no comple con el estandar establecido")
 
         except Exception as error: 
             print(error)
     print(producto)
 
-def deleteProducto():
+    headers = {'Content-type' : 'aplication/json', 'charset' : 'UTF-8'}
+    peticion = requests.post("http://172.16.100.126:5501",headers=headers, data=json.dumps(producto))
+    res = peticion.json()
+    res["Mensaje"] = "Producto guardado"
+    return res
+
+
+def deleteProducto(id):
     data = gP.getProductoCodigo(id)
     if (len(data)):
-        peticion = requests.delete(f"/productos/{id}")
+        peticion = requests.delete(f"http://172.16.100.126:5501/productos/{id}")
         if(peticion.status_code == 204):
             data.append({"message" : "producto eliminado correctamente"})
-            return{
+            return  {
                 "data" : data,
                 "status" : peticion.status_code
             }
-    else : 
+    else: 
         return {
             "body" : [{
                 "menssage" : "producto no  encontrado",
                 "id": id
             }],
-            "status" : 400
+            "status" : 400,
         }
 
 
@@ -88,11 +128,7 @@ def deleteProducto():
     #    "precio_venta": int(input("Ingrse el precio de ventas: ")),
     #    "precio_proveedor": int(input("Ingrse el precio del proveedor: "))
     #}
-    headers = {'Content-type' : 'aplication/json', 'charset' : 'UTF-8'}
-    peticion = requests.post("http://172.16.100.126:5501",headers=headers, data=json.dumps(producto))
-    res = peticion.json()
-    res["Mensaje"] = "Producto guardado"
-    return res
+    
 
 
 def menu():
@@ -108,7 +144,8 @@ def menu():
                                                                       |_|                                    
 
 
-            1. Agregar un uevo producto
+            1. Agregar un nuevo producto
+            2. Eliminar un producto
             0. Salir
               
               """)
@@ -118,5 +155,9 @@ def menu():
             print(tabulate(postProducto(), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
             break
+        if( opcion == 2):
+            id = int(input("Ingrese el codigo del producto que desea eleminar"))
+            print(tabulate(deleteProducto(id), headers="keys",  tablefmt = 'rounded_grid'))
+            input("Precione una tecla para continuar....")
         elif (opcion == 0):
             break

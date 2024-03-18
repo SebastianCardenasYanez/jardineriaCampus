@@ -4,15 +4,16 @@ import requests
 import json
 
 def getAllDataPedidos():
-    peticion = requests.get("http://172.16.100.126:5501") #falta arreglar las url el visual no deja crearlos
+    peticion = requests.get("http://172.16.104.23:5503") #falta arreglar las url el visual no deja crearlos
     #json-server storage/producto.json -b 5503 
     data = peticion.json()
     return data
+    
 
 def getPedidoCodigo(codigo):
-    for val in getAllDataPedidos():
-        if val.get("codigo_pedido") == codigo:
-            return [val]
+    peticion = requests.get("http://172.16.104.23:5503/pedidos/{codigo}")
+    #json-server storage/producto.json -b 5503
+    return [peticion.json()] if peticion.ok else []
 
 #ejercicio 7
 def getAllEstadosPedido():

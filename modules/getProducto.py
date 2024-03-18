@@ -13,9 +13,9 @@ def getAllData():
     return data
 
 def getProductoCodigo (codigo):
-    for val in getAllData():
-        if (val.get('codigo_producto') == codigo):
-            return [val]
+    peticion = requests.get("http://172.16.100.126:5501/productos/{codigo}")
+    #json-server storage/producto.json -b 5501 
+    return [peticion.json()] if peticion.ok else []
 
 #ejercicio 15
 def getAllStockPriceGama (gama, stock):

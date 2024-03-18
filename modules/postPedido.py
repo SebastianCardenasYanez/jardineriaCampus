@@ -74,15 +74,32 @@ def postPedido():
 
 
 
-    peticion = requests.post("http://172.16.100.126:5501", data=json.dumps(pedido))
+    peticion = requests.post("http://172.16.104.23:5503", data=json.dumps(pedido))
 #falta la url bien hecha ..
     res = peticion.json()
     res["Mensaje"] = "Producto guardado"
     return res
 
 
-
-
+def deletePedido(id):
+    data = gP.getPedidoCodigo(id)
+    if (len(data)):
+        peticion = requests.delete(f"http://172.16.104.23:5503/pedidos/{id}")
+        if(peticion.status_code == 204):
+            data.append({"message" : "producto eliminado correctamente"})
+            return{
+                "data" : data,
+                "status" : peticion.status_code,
+            }
+    else : 
+        return {
+            "body" : [{
+                "menssage" : "producto no  encontrado",
+                "id": id
+            }],
+            "status" : 400
+        }
+    
 
 
 
@@ -91,15 +108,14 @@ def menu():
         os.system
         print(f"""
 
+    _      _       _      _    _               _               _                    _ _    _        
+   /_\  __| |_ __ (_)_ _ (_)__| |_ _ _ __ _ __(_)___ _ _    __| |___   _ __  ___ __| (_)__| |___ ___
+  / _ \/ _` | '  \| | ' \| (_-<  _| '_/ _` / _| / _ \ ' \  / _` / -_) | '_ \/ -_) _` | / _` / _ (_-<
+ /_/ \_\__,_|_|_|_|_|_||_|_/__/\__|_| \__,_\__|_\___/_||_| \__,_\___| | .__/\___\__,_|_\__,_\___/__/
+                                                                      |_|                           
 
-    _      _       _      _    _               _               _                        _         _          
-   /_\  __| |_ __ (_)_ _ (_)__| |_ _ _ __ _ __(_)___ _ _    __| |___   _ __ _ _ ___  __| |_  _ __| |_ ___ ___
-  / _ \/ _` | '  \| | ' \| (_-|  _| '_/ _` / _| / _ \ ' \  / _` / -_) | '_ \ '_/ _ \/ _` | || / _|  _/ _ (_-<
- /_/ \_\__,_|_|_|_|_|_||_|_/__/\__|_| \__,_\__|_\___/_||_| \__,_\___| | .__/_| \___/\__,_|\_,_\__|\__\___/__/
-                                                                      |_|                                    
-
-
-            1. Agregar  un nuevo pedido
+            1. Agregar un nuevo pedido
+            2. Eliminar un pedido
             0. Salir
               
               """)
@@ -109,5 +125,9 @@ def menu():
             print(tabulate(postPedido(), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
             break
+        elif (opcion == 2):
+            id = int(input("Ingrese el codigo del pedido que desea eleminar"))
+            print(tabulate(deletePedido(id), headers="keys",  tablefmt = 'rounded_grid'))
+            input("Precione una tecla para continuar....")
         elif (opcion == 0):
             break
