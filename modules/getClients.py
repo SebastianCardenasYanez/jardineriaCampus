@@ -8,6 +8,9 @@ def getAllDataClientes():
     data = peticion.json()
     return data
 
+
+
+
 def getAllDataEmpleados():
     peticion = requests.get("http://172.16.104.23:5506") #falta arreglar las url el visual no deja crearlos
     #json-server storage/empleado.json -b 5506 

@@ -6,14 +6,14 @@ from tabulate import tabulate
 import json
 
 def getAllData():
-    peticion = requests.get("http://172.16.100.126:5501")
+    peticion = requests.get("http://154.38.171.54:5007/pedidos")
     #json-server storage/producto.json -b 5501 
     data = peticion.json()
    
     return data
 
 def getProductoCodigo (codigo):
-    peticion = requests.get("http://172.16.100.126:5501/productos/{codigo}")
+    peticion = requests.get("http://172.16.102.108:5501/productos/{codigo}")
     #json-server storage/producto.json -b 5501 
     return [peticion.json()] if peticion.ok else []
 

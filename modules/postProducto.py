@@ -93,25 +93,43 @@ def postProducto():
     return res
 
 
+# def deleteProducto(id):
+#     data = gP.getProductoCodigo(id)
+#     if (len(data)):
+#         peticion = requests.delete(f"http://154.38.171.54:5007/pedidos{id}")
+#         if(peticion.status_code == 204):
+#             data.append({"message" : "producto eliminado correctamente"})
+#             return  {
+#                 "data" : data,
+#                 "status" : peticion.status_code
+#             }
+#     else: 
+#         return {
+#             "body" : [{
+#                 "menssage" : "producto no encontrado",
+#                 "id": id
+#             }],
+#             "status" : 400,
+#         }
+
 def deleteProducto(id):
     data = gP.getProductoCodigo(id)
-    if (len(data)):
-        peticion = requests.delete(f"http://172.16.100.126:5501/productos/{id}")
+    if(len(data)):
+        peticion = requests.delete(f"http://172.16.102.108:5501/productos/{id}")
         if(peticion.status_code == 204):
-            data.append({"message" : "producto eliminado correctamente"})
-            return  {
-                "data" : data,
-                "status" : peticion.status_code
+            data.append({"message": "producto eliminado correctamente"})
+            return {
+                "body": data, 
+                "status": peticion.status_code
             }
-    else: 
+    else:
         return {
-            "body" : [{
-                "menssage" : "producto no  encontrado",
+            "body":[{
+                "message":"producto no encontrado",
                 "id": id
             }],
-            "status" : 400,
+            "status": 400,
         }
-
 
 
 
@@ -155,9 +173,9 @@ def menu():
             print(tabulate(postProducto(), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
             break
-        if( opcion == 2):
-            id = int(input("Ingrese el codigo del producto que desea eleminar"))
-            print(tabulate(deleteProducto(id), headers="keys",  tablefmt = 'rounded_grid'))
+        elif( opcion == 2):
+            idProducto = input("Ingrese el codigo del producto que desea eleminar")
+            print(tabulate(deleteProducto(idProducto)["body"], headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
         elif (opcion == 0):
             break
