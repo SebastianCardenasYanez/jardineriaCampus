@@ -1,10 +1,16 @@
 from tabulate import tabulate
 import requests
 import json
+import modules.postEmpleados as postEmp
 
 def getAllDataEmpleados():
-    peticion = requests.get("hhttp://127.0.0.1:5506") #falta arreglar las url el visual no deja crearlos
+    peticion = requests.get("http://154.38.171.54:5003/empleados") #falta arreglar las url el visual no deja crearlos
     #json-server storage/producto.json -b 5506 
+    data = peticion.json()
+    return data
+
+def getAllCodigoEmp(codigo):
+    peticion = requests.get("http://154.38.171.54:5003/empleados{codigo}")
     data = peticion.json()
     return data
 
@@ -62,6 +68,7 @@ def menu():
 
                                     1. Obtener los datos del jefe
                                     2. Obtener los nombres de los empleados
+                                    3. Administrar empleados
                                     0. Regresar al menu principal
 
     """)
@@ -72,5 +79,7 @@ def menu():
         elif (opcion == 2):
             print(tabulate(getAllPuestoNombreApellidosEmpleados("Representante Ventas"), headers="keys",  tablefmt = 'rounded_grid'))
             break
+        elif(opcion == 3):
+            postEmp.menu()
         elif (opcion == 0):
             break

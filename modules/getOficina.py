@@ -1,12 +1,18 @@
 from tabulate import tabulate
 import requests
 import json
+import modules.postOficina as postOfi
 
 def getAllDataOficina():
-    peticion = requests.get("http://172.16.104.23:5505") #falta arreglar las url el visual no deja crearlos
+    peticion = requests.get("http://154.38.171.54:5005/oficinas") #falta arreglar las url el visual no deja crearlos
     #json-server storage/producto.json -b 5505
     data = peticion.json()
     return data
+
+def getAllidOfi(codigo):
+    peticion = requests.get("http://154.38.171.54:5005/oficinas/{codigo}")
+    #json-server storage/producto.json -b 5501 
+    return [peticion.json()] if peticion.ok else []
 
 def getAllCodigoCiudad():
     codigoCiudad = []
@@ -40,6 +46,7 @@ def menu():
 
             1. obtener todos los codigos y ciudades
             2. obtener los telefonos de las oficinas de españa
+            3. administracion de oficina
             0. Regresar al menu principal
 
     """)
@@ -51,6 +58,8 @@ def menu():
         elif (opcion == 2):
             print(tabulate(getAllCiudadTelefono("España"), headers="keys",  tablefmt = 'rounded_grid'))
             break
+        elif (opcion == 3):
+            postOfi.menu()
         elif (opcion == 0):
             break
     

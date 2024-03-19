@@ -1,15 +1,18 @@
 from tabulate import tabulate
 import requests
 import json
+import modules.postClients as postCli
 
 def getAllDataClientes():
-    peticion = requests.get("http://172.16.104.23:5507") #falta arreglar las url el visual no deja crearlos
+    peticion = requests.get("http://154.38.171.54:5001/cliente") #falta arreglar las url el visual no deja crearlos
     #json-server storage/cliente.json -b 5507 
     data = peticion.json()
     return data
 
-
-
+def getCodigoCLientes(codigo):
+    peticion = requests.get("http://154.38.171.54:5001/cliente{codigo}")
+    data = peticion.json()
+    return data
 
 def getAllDataEmpleados():
     peticion = requests.get("http://172.16.104.23:5506") #falta arreglar las url el visual no deja crearlos
@@ -184,6 +187,7 @@ def menu():
          |_|                                                              
 
           0. Resgresar al menu principal
+              
           1. Obtener todos los clientes (codigo y nombre)
           2. Obtener un cliente por el codigo (codigo y nombre)
           3. Obtener toda la informacion de un cliente segun su limite de credito y ciudad perteneciente ()
@@ -198,6 +202,7 @@ def menu():
           12.Obtener el nombre del cliente y de su representante de ventas
           13.Obrtener el nombre del cliente y de su representante de ventas si han hecho un pago
           14.Obrtener el nombre del cliente y de su representante de ventas si no han hecho un pago
+          15. Administrar Clientes
 """)
         opcion = int(input("\nSeleccione una de las opciones: "))
         if (opcion == 1):
@@ -271,5 +276,7 @@ def menu():
         elif (opcion == 14):
             print(tabulate(getAllCLienteNoPago(), headers="keys",  tablefmt = 'rounded_grid'))
             break
+        elif(opcion == 15):
+            postCli.menu()
         elif (opcion == 0):
             break

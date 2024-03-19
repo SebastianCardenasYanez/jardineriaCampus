@@ -1,12 +1,18 @@
 from tabulate import tabulate
 import requests
 import json
+import os
 
 def getAllDataPagos():
-    peticion = requests.get("http://172.16.104.23:5504") #falta arreglar las url el visual no deja crearlos
+    peticion = requests.get("http://154.38.171.54:5006/pagos") #falta arreglar las url el visual no deja crearlos
     #json-server storage/producto.json -b 5504
     data = peticion.json()
     return data
+
+def getAllidPagos(codigo):
+    peticion = requests.get("http://172.16.102.108:5501/productos/{codigo}")
+    #json-server storage/producto.json -b 5501 
+    return [peticion.json()] if peticion.ok else []
 
 
 
@@ -39,3 +45,36 @@ def getAllFormaPago() :
         
     return [formasDePago]
 
+def menu():
+    while True: 
+        os.system("clear")
+        print(f"""
+
+
+   
+    _      _       _      _    _               _               _                              
+   /_\  __| |_ __ (_)_ _ (_)__| |_ _ _ __ _ __(_)___ _ _    __| |___   _ __  __ _ __ _ ___ ___
+  / _ \/ _` | '  \| | ' \| (_-<  _| '_/ _` / _| / _ \ ' \  / _` / -_) | '_ \/ _` / _` / _ (_-<
+ /_/ \_\__,_|_|_|_|_|_||_|_/__/\__|_| \__,_\__|_\___/_||_| \__,_\___| | .__/\__,_\__, \___/__/
+                                                                      |_|        |___/        
+
+            1. Obtener los codigos de los clientes que realizaron pagos en el 2008
+            2. Obtener todas las formas de pago en el 2008
+            3. Obtener todas las formas de pago
+            0. Salir
+              
+              """)
+
+        opcion = int(input("\nSeleccione una de las opciones: "))
+        if (opcion == 1):
+            print(tabulate(getAllCodigoClienteAñoPago(), headers="keys",  tablefmt = 'rounded_grid'))
+            input("Precione una tecla para continuar....")
+            break
+        elif (opcion==2):
+            print(tabulate(getAllFormaDePago2008(), headers="keys",  tablefmt = 'rounded_grid'))
+            input("Precione una tecla para continuar....")
+        elif (opcion==3):
+            print(tabulate(getAllFormaPago(), headers="keys",  tablefmt = 'rounded_grid'))
+            input("Precione una tecla para continuar....")
+        elif (opcion == 0):
+            break

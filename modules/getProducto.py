@@ -6,7 +6,7 @@ from tabulate import tabulate
 import json
 
 def getAllData():
-    peticion = requests.get("http://154.38.171.54:5007/pedidos")
+    peticion = requests.get("http://172.16.102.108:5501/productos")
     #json-server storage/producto.json -b 5501 
     data = peticion.json()
    
@@ -70,6 +70,7 @@ def menu():
          |_|                        |_|                                    
 
             1. Obtener todos los productos de una categoría ordenando sus precios de venta, también que su cantidad de inventario sea superior
+            2. administrar productos
             0. Salir
               
               """)
@@ -80,5 +81,7 @@ def menu():
             stock = int(input("Ingrese las unidades que deseas mostrar : "))
             print(tabulate(getAllStockPriceGama (gama, stock), headers="keys",  tablefmt = 'rounded_grid'))
             break
+        elif (opcion==2): 
+            postPro.menu()
         elif(opcion == 0):
             break

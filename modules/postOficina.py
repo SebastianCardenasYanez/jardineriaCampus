@@ -73,21 +73,37 @@ def postOficina():
         except Exception as error: 
             print(error)
         print(oficina)
-        
 
-
-
-
- 
-
-
-
-    peticion = requests.post("http://172.16.100.126:5501", data=json.dumps(oficina))
+    peticion = requests.post("http://154.38.171.54:5005/oficinas", data=json.dumps(oficina))
 #falta la url bien hecha ..
     res = peticion.json()
     res["Mensaje"] = "Producto guardado"
     return res
 
+def deleteOficina(id):
+    data = gO.getAllidOfi(id)
+    if (len(data)):
+        peticion = requests.delete(f"http://154.38.171.54:5005/oficinas/{id}")
+        if(peticion.status_code == 204):
+            data.append({"message" : "producto eliminado correctamente"})
+            return{
+                "data" : data,
+                "status" : peticion.status_code,
+            }
+    else : 
+        return {
+            "body" : [{
+                "menssage" : "producto no  encontrado",
+                "id": id
+            }],
+            "status" : 400
+        }
+    
+    # peticion = requests.delete("http://172.16.104.23:5503/pedidos/{id}")
+#falta la url bien hecha ..
+    res = peticion.json()
+    res["Mensaje"] = "Producto eliminado"
+    return res
 
 def menu():
     while True: 
@@ -102,6 +118,7 @@ def menu():
                                                                                                 
 
             1. Agregar una nueva oficina
+            2.Eliminar una oficina
             0. Salir
               
               """)
@@ -111,5 +128,9 @@ def menu():
             print(tabulate(postOficina(), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
             break
+        elif (opcion ==2):
+            id = int(input("Ingrese el codigo del pedido que desea eleminar"))
+            print(tabulate(deleteOficina(id), headers="keys",  tablefmt = 'rounded_grid'))
+            input("Precione una tecla para continuar....")
         elif (opcion == 0):
             break

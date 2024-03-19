@@ -3,6 +3,7 @@ import re
 import requests
 from tabulate import tabulate
 import os
+import modules.getClients as cli
 
 def postClients():
     clientes = {}
@@ -125,11 +126,37 @@ def postClients():
     print(clientes)
 
 
-    peticion = requests.post("http://172.16.100.126:5501", data=json.dumps(clientes))
+    peticion = requests.post("http://154.38.171.54:5001/cliente", data=json.dumps(clientes))
 #falta la url bien hecha ..
     res = peticion.json()
     res["Mensaje"] = "Producto guardado"
     return res
+
+def deleteClientes(id):
+    data = cli.getCodigoCLientes(id)
+    if (len(data)):
+        peticion = requests.delete(f"http://154.38.171.54:5001/cliente{id}")
+    if(peticion.status_code == 204):
+        data.append({"message" : "cliente eliminado correctamente"})
+        return{
+            "data" : data,
+            "status" : peticion.status_code,
+        }
+    else : 
+        return {
+            "body" : [{
+                "menssage" : "cliente no encontrado",
+                "id": id
+            }],
+            "status" : 400
+        }
+
+# peticion = requests.delete("http://172.16.104.23:5503/pedidos/{id}")
+#falta la url bien hecha ..
+    res = peticion.json()
+    res["Mensaje"] = "Producto eliminado"
+    return res
+
 
 
 def menu():
@@ -144,6 +171,7 @@ def menu():
                                                                                                  
 
             1. Agregar una nueva clientes
+            2. Eliminar un cliente
             0. Salir
               
               """)
@@ -151,6 +179,11 @@ def menu():
         opcion = int(input("\nSeleccione una de las opciones: "))
         if (opcion == 1):
             print(tabulate(postClients(), headers="keys",  tablefmt = 'rounded_grid'))
+            input("Precione una tecla para continuar....")
+            break
+        elif (opcion == 2):
+            id = input("Ingrese la id del cliente que desea eliminar: ")
+            print(tabulate(deleteClientes(id), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
             break
         elif (opcion == 0):

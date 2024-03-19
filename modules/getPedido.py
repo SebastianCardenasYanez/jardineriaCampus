@@ -2,6 +2,7 @@
 from tabulate import tabulate
 import requests
 import json
+import modules.postPedido as postPed
 
 def getAllDataPedidos():
     peticion = requests.get("http://172.16.104.23:5503") #falta arreglar las url el visual no deja crearlos
@@ -131,6 +132,7 @@ def menu():
                                     3. Obtener los pedidos entregados antes de tiempo
                                     4. Obtener los pedidos rechazados
                                     5. Obtener los pedidos entregados
+                                    6. administrar los pedidos
                                     0. Regresar al menu principal
 
     """)
@@ -150,5 +152,7 @@ def menu():
         elif (opcion == 5):
             print(tabulate(getAllPedidosEntregados(), headers="keys",  tablefmt = 'rounded_grid'))
             break
+        elif (opcion == 6):
+            postPed.menu()
         elif (opcion == 0):
             break

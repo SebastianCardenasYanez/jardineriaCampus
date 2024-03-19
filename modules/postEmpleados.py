@@ -81,10 +81,35 @@ def postEmpleados():
         print(empleados)
 
 
-    peticion = requests.post("http://172.16.100.126:5501", data=json.dumps(empleados))
+    peticion = requests.post("http://154.38.171.54:5003/empleados", data=json.dumps(empleados))
 #falta la url bien hecha ..
     res = peticion.json()
     res["Mensaje"] = "Producto guardado"
+    return res
+
+def deleteEmpleados(id):
+    data = gE.getAllCodigoEmp(id)
+    if (len(data)):
+        peticion = requests.delete("http://154.38.171.54:5003/empleados{id}")
+        if(peticion.status_code == 204):
+            data.append({"message" : "producto eliminado correctamente"})
+            return{
+                "data" : data,
+                "status" : peticion.status_code,
+            }
+    else : 
+        return {
+            "body" : [{
+                "menssage" : "producto no  encontrado",
+                "id": id
+            }],
+            "status" : 400
+        }
+    
+    # peticion = requests.delete("http://172.16.104.23:5503/pedidos/{id}")
+#falta la url bien hecha ..
+    res = peticion.json()
+    res["Mensaje"] = "Producto eliminado"
     return res
 
 
@@ -101,6 +126,7 @@ def menu():
                                                                                 |_|                          
 
             1. Agregar un nuevo empleado
+            2. Eliminar un empleado
             0. Salir
               
               """)
@@ -110,5 +136,9 @@ def menu():
             print(tabulate(postEmpleados(), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
             break
+        if (opcion == 2):
+            id = input("Ingrese el id del empleado que desea eliminar")
+            print(tabulate(deleteEmpleados(id), headers="keys",  tablefmt = 'rounded_grid'))
+            input("Precione una tecla para continuar....")
         elif (opcion == 0):
             break

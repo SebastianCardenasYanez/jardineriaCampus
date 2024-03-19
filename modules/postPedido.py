@@ -74,10 +74,10 @@ def postPedido():
 
 
 
-    peticion = requests.post("http://172.16.104.23:5503", data=json.dumps(pedido))
+    peticion = requests.post("http://172.16.104.23:5503/pedidos", data=json.dumps(pedido))
 #falta la url bien hecha ..
     res = peticion.json()
-    res["Mensaje"] = "Producto guardado"
+    res["Mensaje"] = "Pedido eliminado"
     return res
 
 
@@ -100,6 +100,11 @@ def deletePedido(id):
             "status" : 400
         }
     
+    # peticion = requests.delete("http://172.16.104.23:5503/pedidos/{id}")
+#falta la url bien hecha ..
+    res = peticion.json()
+    res["Mensaje"] = "Producto eliminado"
+    return res
 
 
 
@@ -120,14 +125,17 @@ def menu():
               
               """)
 
-        opcion = int(input("\nSeleccione una de las opciones: "))
-        if (opcion == 1):
-            print(tabulate(postPedido(), headers="keys",  tablefmt = 'rounded_grid'))
-            input("Precione una tecla para continuar....")
-            break
-        elif (opcion == 2):
-            id = int(input("Ingrese el codigo del pedido que desea eleminar"))
-            print(tabulate(deletePedido(id), headers="keys",  tablefmt = 'rounded_grid'))
-            input("Precione una tecla para continuar....")
-        elif (opcion == 0):
-            break
+        opcion = input("\nSelecione una de las opciones: ")
+        if(re.match(r'[0-9]+$', opcion) is not None):
+            opcion = int(opcion)
+            if(opcion>=0 and opcion<=2):
+                if (opcion == 1):
+                    print(tabulate(postPedido(), headers="keys",  tablefmt = 'rounded_grid'))
+                    input("Precione una tecla para continuar....")
+                    break
+                elif (opcion == 2):
+                    id = int(input("Ingrese el codigo del pedido que desea eleminar"))
+                    print(tabulate(deletePedido(id), headers="keys",  tablefmt = 'rounded_grid'))
+                    input("Precione una tecla para continuar....")
+                elif (opcion == 0):
+                    break

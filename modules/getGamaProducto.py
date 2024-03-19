@@ -5,9 +5,14 @@ import requests
 #ejercicio 15
 def getAllGama():
     #json-server storage/producto.json -b 5502
-    peticion = requests.get("http://172.16.100.126:5502")
+    peticion = requests.get("http://154.38.171.54:5004/gama")
     data = peticion.json()
     return data
+
+def getAllidGP(codigo):
+    peticion = requests.get("http://154.38.171.54:5004/gama/{codigo}")
+    #json-server storage/producto.json -b 5501 
+    return [peticion.json()] if peticion.ok else []
 
 def getAllNombre():
     gamaNombre = []

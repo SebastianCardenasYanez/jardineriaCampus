@@ -40,12 +40,36 @@ def postGamaProducto():
         print(gamaProducto)
 
 
-    peticion = requests.post("http://172.16.100.126:5501", data=json.dumps(gamaProducto))
+    peticion = requests.post(" http://154.38.171.54:5004/gama", data=json.dumps(gamaProducto))
 #falta la url bien hecha ..
     res = peticion.json()
     res["Mensaje"] = "Producto guardado"
     return res
 
+def deleteOficina(id):
+    data = gGP.getAllidGP(id)
+    if (len(data)):
+        peticion = requests.delete(f" http://154.38.171.54:5004/gama{id}")
+        if(peticion.status_code == 204):
+            data.append({"message" : "gama eliminada correctamente"})
+            return{
+                "data" : data,
+                "status" : peticion.status_code,
+            }
+    else : 
+        return {
+            "body" : [{
+                "menssage" : "producto no  encontrado",
+                "id": id
+            }],
+            "status" : 400
+        }
+    
+    # peticion = requests.delete("http://172.16.104.23:5503/pedidos/{id}")
+#falta la url bien hecha ..
+    res = peticion.json()
+    res["Mensaje"] = "Gama eliminada"
+    return res
 
 
 def menu():
@@ -70,5 +94,8 @@ def menu():
             print(tabulate(postGamaProducto(), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
             break
+        elif(opcion == 2):
+            id = input("Ingrese la id de la oficina que desea eliminar: ")
+            print(tabulate(deleteOficina(id), headers="keys",  tablefmt = 'rounded_grid'))
         elif (opcion == 0):
             break
