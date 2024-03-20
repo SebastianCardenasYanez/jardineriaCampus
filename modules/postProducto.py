@@ -3,7 +3,7 @@ import re
 import requests
 import os
 from tabulate import tabulate
-
+import modules.uptadeProducto as uP
 import modules.getGamaProducto as gG
 import modules.getProducto as gP
 
@@ -116,7 +116,7 @@ def postProducto():
 def deleteProducto(id):
     data = gP.getProductoCodigo(id)
     if (len(data)):
-        peticion = requests.delete(f"http://172.16.102.108:5501/productos/{id}")
+        peticion = requests.delete(f"http://154.38.171.54:5008/productos/{id}")
         if(peticion.status_code == 204):
             data.append({"message": "producto eliminado correctamente"})
             return {
@@ -133,7 +133,7 @@ def deleteProducto(id):
         }
 
     
-    peticion = requests.delete("http://172.16.102.108:5501/productos{id}")
+    peticion = requests.delete("http://154.38.171.54:5008/productos/{id}")
     res = peticion.json()
     res["Mensaje"] = "Producto eliminado"
     return res
@@ -169,6 +169,7 @@ def menu():
 
             1. Agregar un nuevo producto
             2. Eliminar un producto
+            3. actualizar producto
             0. Salir
               
               """)
@@ -185,5 +186,8 @@ def menu():
                     idProducto = input("Ingrese el id del producto que desea eliminar: ")
                     # deleteProducto(idProducto)
                     print(tabulate(deleteProducto(idProducto)["body"], headers="keys", tablefmt="github"))
+                elif (opcion ==3):
+                    
+                    uP.updateProductoNom()
                 elif (opcion == 0):
                     break
