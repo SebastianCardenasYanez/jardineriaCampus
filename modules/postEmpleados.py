@@ -109,12 +109,11 @@ Seleccione una opción: """))
             nuevoValor = input(f"""
 Ingrese el nuevo valor para {datoModificar}: """)
             if datoModificar in data[0]:
-                if datoModificar == "codigo_empleado" or "codigo_jefe":
+                if data[0][datoModificar] == data[0]["codigo_empleado"] or data[0][datoModificar]== data[0]["codigo_jefe"]:
                     data[0][datoModificar] = int(nuevoValor)
                     break
                 else:
                     data[0][datoModificar] = nuevoValor
-                    print(tabulate(data[0], headers="keys", tablefmt="rounded_grid"))
                     break
             else:
                  print(f"""
@@ -174,19 +173,22 @@ def menu():
               
               """)
 
-        opcion = int(input("\nSeleccione una de las opciones: "))
-        if (opcion == 1):
-            print(tabulate(postEmpleados(), headers="keys",  tablefmt = 'rounded_grid'))
-            input("Precione una tecla para continuar....")
-            break
-        elif (opcion == 2):
-            id = input("Ingrese el id del empleado que desea eliminar")
-            print(tabulate(deleteEmpleados(id), headers="keys",  tablefmt = 'rounded_grid'))
-            input("Precione una tecla para continuar....")
-        elif (opcion == 3):
-            idEmpleado = input("Ingrese el id del empleado: ")
-            print(tabulate(updateEmpleados(idEmpleado), headers="keys", tablefmt='rounded_grid'))
-            input(f"""
-Escriba una tecla para continuar: """)
-        elif (opcion == 0):
-            break
+        opcion = input("\nSelecione una de las opciones: ")
+        if(re.match(r'[0-9]+$', opcion) is not None):
+            opcion = int(opcion)
+            if(opcion>=0 and opcion<=3):
+                if (opcion == 1):
+                    print(tabulate(postEmpleados(), headers="keys",  tablefmt = 'rounded_grid'))
+                    input("Precione una tecla para continuar....")
+                    break
+                elif (opcion == 2):
+                    id = input("Ingrese el id del empleado que desea eliminar")
+                    print(tabulate(deleteEmpleados(id), headers="keys",  tablefmt = 'rounded_grid'))
+                    input("Precione una tecla para continuar....")
+                elif (opcion == 3):
+                    idEmpleado = input("Ingrese el id del empleado: ")
+                    print(tabulate(updateEmpleados(idEmpleado), headers="keys", tablefmt='rounded_grid'))
+                    input(f"""
+        Escriba una tecla para continuar: """)
+                elif (opcion == 0):
+                    break

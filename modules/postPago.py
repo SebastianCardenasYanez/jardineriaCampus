@@ -22,7 +22,7 @@ def postPago():
 
             if (not Pago.get("id_transaccion")):
                 id = input("Ingrese la id de la transaccion: ")
-                if (re.match(r'^[a-z]{2}-[a-z]{3}-[0-9]{6}$', id)is not None):
+                if (re.match(r'^[a-zA-Z]{2}-[a-zA-Z]{3}-\d{6}$', id)is not None):
                         Pago["id_transaccion"] = id
                         break
                 else:
@@ -30,7 +30,7 @@ def postPago():
                 
             if (not Pago.get("fecha_pago")):
                 fecha = input("Ingrese la fecha en la que se realizo el pago: ")
-                if (re.match(r'^[0-9]{4}-[0-9]{2}-[0-1]{1}[0-9]{1}$', fecha)is not None):
+                if (re.match(r'^\d{4}-\d{2}-\d{2}$', fecha)is not None):
                         Pago["id_transaccion"] = id
                         break
                 else:
@@ -75,7 +75,7 @@ Seleccione una opción: """))
             nuevoValor = input(f"""
 Ingrese el nuevo valor para {datoModificar}: """)
             if datoModificar in data[0]:
-                if datoModificar == "total" or "codigo_cliente":
+                if data[0][datoModificar] == data[0]["total"] or data[0][datoModificar] == data[0]["codigo_cliente"]:
                     data[0][datoModificar] = int(nuevoValor)
                     break
                 else:
@@ -136,23 +136,27 @@ def menu():
 
             1. Agregar un nuevo pago
             2. Eliminar un pago
+            3. Actualizar un pago
             0. Salir
               
               """)
 
-        opcion = int(input("\nSeleccione una de las opciones: "))
-        if (opcion == 1):
-            print(tabulate(postPago(), headers="keys",  tablefmt = 'rounded_grid'))
-            input("Precione una tecla para continuar....")
-            break
-        elif (opcion==2):
-            id = input("Ingrese el id del pago que desea eliminar")
-            print(tabulate(deletePago(id), headers="keys",  tablefmt = 'rounded_grid'))
-            input("Precione una tecla para continuar....")
-        elif (opcion ==3):
-            idPedido = input("Ingrese el id del Pedido: ")
-            print(tabulate(updatePagos(idPedido), headers="keys", tablefmt='rounded_grid'))
-            input(f"""
-Escriba una tecla para continuar: """)
-        elif (opcion == 0):
-            break
+        opcion = input("\nSelecione una de las opciones: ")
+        if(re.match(r'[0-9]+$', opcion) is not None):
+            opcion = int(opcion)
+            if(opcion>=0 and opcion<=3):
+                if (opcion == 1):
+                    print(tabulate(postPago(), headers="keys",  tablefmt = 'rounded_grid'))
+                    input("Precione una tecla para continuar....")
+                    break
+                elif (opcion==2):
+                    id = input("Ingrese el id del pago que desea eliminar")
+                    print(tabulate(deletePago(id), headers="keys",  tablefmt = 'rounded_grid'))
+                    input("Precione una tecla para continuar....")
+                elif (opcion ==3):
+                    idPedido = input("Ingrese el id del Pedido: ")
+                    print(tabulate(updatePagos(idPedido), headers="keys", tablefmt='rounded_grid'))
+                    input(f"""
+        Escriba una tecla para continuar: """)
+                elif (opcion == 0):
+                    break

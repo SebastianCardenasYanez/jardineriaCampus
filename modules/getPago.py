@@ -2,6 +2,7 @@ from tabulate import tabulate
 import requests
 import json
 import os
+import modules.postPago as postPago
 
 def getAllDataPagos():
     peticion = requests.get("http://154.38.171.54:5006/pagos") #falta arreglar las url el visual no deja crearlos
@@ -52,15 +53,17 @@ def menu():
 
 
    
-    _      _       _      _    _               _               _                              
-   /_\  __| |_ __ (_)_ _ (_)__| |_ _ _ __ _ __(_)___ _ _    __| |___   _ __  __ _ __ _ ___ ___
-  / _ \/ _` | '  \| | ' \| (_-<  _| '_/ _` / _| / _ \ ' \  / _` / -_) | '_ \/ _` / _` / _ (_-<
- /_/ \_\__,_|_|_|_|_|_||_|_/__/\__|_| \__,_\__|_\___/_||_| \__,_\___| | .__/\__,_\__, \___/__/
-                                                                      |_|        |___/        
+
+  ___                   _               _                           
+ | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   _ __  __ _ __ _ ___ 
+ |   / -_) '_ \/ _ \ '_|  _/ -_|_-< / _` / -_) | '_ \/ _` / _` / _ |
+ |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| | .__/\__,_\__, \___/
+         |_|                                   |_|        |___/     
 
             1. Obtener los codigos de los clientes que realizaron pagos en el 2008
             2. Obtener todas las formas de pago en el 2008
             3. Obtener todas las formas de pago
+            4. Administrar pagos
             0. Salir
               
               """)
@@ -76,5 +79,7 @@ def menu():
         elif (opcion==3):
             print(tabulate(getAllFormaPago(), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
+        elif (opcion == 4):
+            postPago.menu()
         elif (opcion == 0):
             break

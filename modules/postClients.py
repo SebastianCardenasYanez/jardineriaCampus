@@ -42,7 +42,7 @@ def postClients():
 
             if(not clientes.get("telefono")):
                 tel = input("Ingrese el numero de telefo: ")
-                if (re.match(r'^[0-9]{10}$', tel)is not None):
+                if (re.match(r'^\d{1,3} ?\d{4}-?\d{4}$', tel)is not None):
                         clientes["telefono"] = tel
                         break
                 else:

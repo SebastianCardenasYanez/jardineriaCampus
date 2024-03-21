@@ -125,12 +125,12 @@ Id del producto no encontrado. """)
                     nuevoValor = input(f"""
         Ingrese el nuevo valor para {datoModificar}: """)
                     if datoModificar in data[0]:
-                        if datoModificar != "cantidadEnStock" or "precio_venta" or "precio_proveedor":
-                            data[0][datoModificar] = nuevoValor
+                        if data[0][datoModificar] == data[0]["cantidadEnStock"] or data[0][datoModificar] == data[0]["precio_venta"] or data[0][datoModificar] == data[0]["precio_proveedor"]:
+                            data[0][datoModificar] = int(nuevoValor)
                             break
                         else:
-                            data[0][datoModificar] = int(nuevoValor)
-                            print(tabulate(data[0], headers="keys", tablefmt="rounded_grid"))
+                            data[0][datoModificar] = nuevoValor
+                            
                             break
                     else:
                         print(f"""
@@ -234,7 +234,7 @@ def menu():
 
             1. Agregar un nuevo producto
             2. Eliminar un producto
-            3. actualizar producto
+            3. Actualizar un producto
             0. Salir
               
               """)

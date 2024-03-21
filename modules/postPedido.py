@@ -4,7 +4,7 @@ import requests
 from tabulate import tabulate
 import os
 import modules.getPedido as gP
-
+#'^\+\d{1,3}\s\d{1,3}\s\d{4,10}$'
 
 def postPedido():
     pedido = {}
@@ -23,7 +23,7 @@ def postPedido():
             
             if(not pedido.get("fecha_pedido")):
                 date = input("Ingrese fecha en la que se realizo el pedido")
-                if (re.match(r'^[0-9]{4}-[0-9]{2}-[0-1]{1}[0-9]{1}$', date)is not None):
+                if (re.match(r'^\d{4}-\d{2}-\d{2}$', date)is not None):
                     pedido['fecha_pedido'] = date
 
                 else :
@@ -31,7 +31,7 @@ def postPedido():
 
             if(not pedido.get("fecha_esperada")):
                 date = input("Ingrese fecha en la que se realizo el pedido")
-                if (re.match(r'^[0-9]{4}-[0-9]{2}-[0-1]{1}[0-9]{1}$', date)is not None):
+                if (re.match(r'^\d{4}-\d{2}-\d{2}$', date)is not None):
                     pedido['fecha_esperada'] = date
 
                 elif date == None :
@@ -42,7 +42,7 @@ def postPedido():
 
             if(not pedido.get("fecha_entrega")):
                 dateE = input("Ingrese fecha en la que se realizo el pedido")
-                if (re.match(r'^[0-9]{4}-[0-9]{2}-[0-1]{1}[0-9]{1}$', dateE)is not None):
+                if (re.match(r'^\d{4}-\d{2}-\d{2}$', dateE)is not None):
                     pedido['fecha_pedido'] = dateE
 
                 else :
@@ -100,12 +100,12 @@ Seleccione una opción: """))
             nuevoValor = input(f"""
 Ingrese el nuevo valor para {datoModificar}: """)
             if datoModificar in data[0]:
-                if datoModificar == "codigo_pedido" or "codigo_cliente":
+                if data[0][datoModificar] == data[0]["codigo_pedido"] or data[0][datoModificar] == data[0]["codigo_cliente"]:
                     data[0][datoModificar] = int(nuevoValor)
                     break
                 else:
                     data[0][datoModificar] = nuevoValor
-                    print(tabulate(data[0], headers="keys", tablefmt="rounded_grid"))
+                    
                     break
             else:
                  print(f"""
@@ -161,7 +161,7 @@ def menu():
 
             1. Agregar un nuevo pedido
             2. Eliminar un pedido
-            3. Editar un pedido
+            3. Actualizar un pedido
             0. Salir
               
               """)
@@ -169,7 +169,7 @@ def menu():
         opcion = input("\nSelecione una de las opciones: ")
         if(re.match(r'[0-9]+$', opcion) is not None):
             opcion = int(opcion)
-            if(opcion>=0 and opcion<=2):
+            if(opcion>=0 and opcion<=3):
                 if (opcion == 1):
                     print(tabulate(postPedido(), headers="keys",  tablefmt = 'rounded_grid'))
                     input("Precione una tecla para continuar....")

@@ -47,7 +47,7 @@ def postOficina():
 
             if (not oficina.get("telefono")):
                 tel = input("Ingrese el telefono de la oficina: ")
-                if (re.match(r'^[+0-9]{2}\s[0-9]{2}\s[0-9]{7}$', tel)is not None):
+                if (re.match(r'^\+\d{1,3}\s\d{1,3}\s\d{4,10}$', tel)is not None):
                         oficina["telefono"] = tel
                         break
                 else:
@@ -103,7 +103,6 @@ Seleccione una opción: """))
 Ingrese el nuevo valor para {datoModificar}: """)
             if datoModificar in data[0]:
                 data[0][datoModificar] = nuevoValor
-                print(tabulate(data[0], headers="keys", tablefmt="rounded_grid"))
                 break
             else:
                  print(f"""
@@ -163,19 +162,22 @@ def menu():
               
               """)
 
-        opcion = int(input("\nSeleccione una de las opciones: "))
-        if (opcion == 1):
-            print(tabulate(postOficina(), headers="keys",  tablefmt = 'rounded_grid'))
-            input("Precione una tecla para continuar....")
-            break
-        elif (opcion ==2):
-            id = int(input("Ingrese el codigo del pedido que desea eleminar"))
-            print(tabulate(deleteOficina(id), headers="keys",  tablefmt = 'rounded_grid'))
-            input("Precione una tecla para continuar....")
-        elif (opcion == 3):
-            idOfi = input("Ingrese el id de la oficina: ")
-            print(tabulate(updateOficina(idOfi), headers="keys", tablefmt='rounded_grid'))
-            input(f"""
-Escriba una tecla para continuar: """)
-        elif (opcion == 0):
-            break
+        opcion = input("\nSelecione una de las opciones: ")
+        if(re.match(r'[0-9]+$', opcion) is not None):
+            opcion = int(opcion)
+            if(opcion>=0 and opcion<=3):
+                if (opcion == 1):
+                    print(tabulate(postOficina(), headers="keys",  tablefmt = 'rounded_grid'))
+                    input("Precione una tecla para continuar....")
+                    break
+                elif (opcion ==2):
+                    id = int(input("Ingrese el codigo del pedido que desea eleminar"))
+                    print(tabulate(deleteOficina(id), headers="keys",  tablefmt = 'rounded_grid'))
+                    input("Precione una tecla para continuar....")
+                elif (opcion == 3):
+                    idOfi = input("Ingrese el id de la oficina: ")
+                    print(tabulate(updateOficina(idOfi), headers="keys", tablefmt='rounded_grid'))
+                    input(f"""
+        Escriba una tecla para continuar: """)
+                elif (opcion == 0):
+                    break
