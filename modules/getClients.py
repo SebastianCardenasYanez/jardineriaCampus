@@ -10,7 +10,7 @@ def getAllDataClientes():
     return data
 
 def getCodigoCLientes(codigo):
-    peticion = requests.get("http://154.38.171.54:5001/cliente{codigo}")
+    peticion = requests.get(f"http://154.38.171.54:5001/cliente{codigo}")
     data = peticion.json()
     return data
 

@@ -53,7 +53,7 @@ def postPedido():
 #no supe como hacer cuando es conjunto, preguntele al profe hermoso
             if (not pedido.get("comentario")):
                 com = input("Ingrese un comentario: ")
-                if (re.match(r'^[A-Z][a-z]*\s*)+$', com)is not None):
+                if (re.match(r'^[A-Z][a-zA-Z0-9\s]*$', com)is not None):
                     pedido["comentario"] = com
                     break
                 elif com == None : 
@@ -74,37 +74,77 @@ def postPedido():
 
 
 
-    peticion = requests.post("http://172.16.104.23:5503/pedidos", data=json.dumps(pedido))
+    peticion = requests.post(" http://154.38.171.54:5007/pedidos", data=json.dumps(pedido))
 #falta la url bien hecha ..
     res = peticion.json()
     res["Mensaje"] = "Pedido eliminado"
     return res
 
+def updatePedido(id):
+    data = gP.getPedidoCodigo(id)
+    if data is None:
+            print(f"""
+Id del pedido no encontrado. """)
+
+    while True:
+        try:
+            print(tabulate(data, headers="keys", tablefmt="rounded_grid"))
+            print(f"""
+Datos para modificar: """)
+            for i, (val, asd) in enumerate(data[0].items()):
+                print(f"{i+1}. {val}")
+
+            opcion = int(input(f"""
+Seleccione una opción: """))
+            datoModificar = list(data[0].keys())[opcion - 1]
+            nuevoValor = input(f"""
+Ingrese el nuevo valor para {datoModificar}: """)
+            if datoModificar in data[0]:
+                if datoModificar == "codigo_pedido" or "codigo_cliente":
+                    data[0][datoModificar] = int(nuevoValor)
+                    break
+                else:
+                    data[0][datoModificar] = nuevoValor
+                    print(tabulate(data[0], headers="keys", tablefmt="rounded_grid"))
+                    break
+            else:
+                 print(f"""
+Seleccion incorrecta""")
+
+        except ValueError as error:
+            print(error)
+
+    peticion = requests.put(f"http://154.38.171.54:5007/pedidos/{id}", data=json.dumps(data[0], indent=4).encode("UTF-8"))
+    res = peticion.json()
+    res["Mensaje"] = "Pedido Modificado"
+    return [res]
+
 
 def deletePedido(id):
     data = gP.getPedidoCodigo(id)
     if (len(data)):
-        peticion = requests.delete(f"http://172.16.104.23:5503/pedidos/{id}")
-        if(peticion.status_code == 204):
-            data.append({"message" : "producto eliminado correctamente"})
-            return{
-                "data" : data,
-                "status" : peticion.status_code,
+        peticion = requests.delete(f"http://154.38.171.54:5007/pedidos/{id}")
+        if peticion.status_code == 200:
+            data.append({"message": "producto eliminado correctamente"})
+            return {
+                "body": data, 
+                "status": peticion.status_code
             }
-    else : 
+        else:
+            return {
+                "body": [{"message": "Error al eliminar el producto"}],
+                "status": peticion.status_code
+            }
+    else:
         return {
-            "body" : [{
-                "menssage" : "producto no  encontrado",
-                "id": id
-            }],
-            "status" : 400
-        }
-    
+            "body": [{"message": "Producto no encontrado", "id": id}],
+            "status": 404 }
+
     # peticion = requests.delete("http://172.16.104.23:5503/pedidos/{id}")
 #falta la url bien hecha ..
-    res = peticion.json()
-    res["Mensaje"] = "Producto eliminado"
-    return res
+    # res = peticion.json()
+    # res["Mensaje"] = "Producto eliminado"
+    # return res
 
 
 
@@ -121,6 +161,7 @@ def menu():
 
             1. Agregar un nuevo pedido
             2. Eliminar un pedido
+            3. Editar un pedido
             0. Salir
               
               """)
@@ -137,5 +178,10 @@ def menu():
                     id = int(input("Ingrese el codigo del pedido que desea eleminar"))
                     print(tabulate(deletePedido(id), headers="keys",  tablefmt = 'rounded_grid'))
                     input("Precione una tecla para continuar....")
+                elif (opcion == 3):
+                    idPedido = input("Ingrese el id del Pedido: ")
+                    print(tabulate(updatePedido(idPedido), headers="keys", tablefmt='rounded_grid'))
+                    input(f"""
+Escriba una tecla para continuar: """)
                 elif (opcion == 0):
                     break

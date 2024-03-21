@@ -18,21 +18,21 @@ def postOficina():
                     raise Exception("El codigo no comple con el estandar establecido ")
             if (not oficina.get("ciudad")):
                 ciudad = input("Ingrese la ciudad de la ofcina: ")
-                if (re.match(r'^[A-Z][a-z]*\s*)+$', ciudad)is not None):
+                if (re.match(r'^[A-Z][a-zA-Z0-9\s]*$', ciudad)is not None):
                     oficina["nombre"] = ciudad
                     break
                 else:
                         raise Exception("La ciudad no comple con el estandar establecido")
             if (not oficina.get("pais")):
                 pais = input("Ingrese el pais de la ofcina: ")
-                if (re.match(r'^[A-Z][a-z])+$', pais)is not None):
+                if (re.match(r'^[A-Z][a-zA-Z0-9\s]*$', pais)is not None):
                     oficina["pais"] = pais
                     break
                 else:
                     raise Exception("El pais no comple con el estandar establecido")
             if (not oficina.get("region")):
                 region = input("Ingrese la region de la ofcina: ")
-                if (re.match(r'^[A-Z][a-z])+$', region)is not None):
+                if (re.match(r'^[A-Z][a-zA-Z0-9\s]*$', region)is not None):
                     oficina["region"] = region
                     break
                 else:
@@ -46,7 +46,7 @@ def postOficina():
                     raise Exception("El codigo no comple con el estandar establecido ")
 
             if (not oficina.get("telefono")):
-                tel = input("Ingrese la id de la transaccion: ")
+                tel = input("Ingrese el telefono de la oficina: ")
                 if (re.match(r'^[+0-9]{2}\s[0-9]{2}\s[0-9]{7}$', tel)is not None):
                         oficina["telefono"] = tel
                         break
@@ -54,16 +54,16 @@ def postOficina():
                     raise Exception("El id no comple con el estandar establecido")
 
             if (not oficina.get("linea_direccion1")):
-                direc1 = input("Ingrese la id de la transaccion: ")
-                if (re.match(r'^[A-Z][a-z][0-9]*\s*)$', direc1)is not None):
+                direc1 = input("Ingrese la linea de direccion 1: ")
+                if (re.match(r'^[A-Z][a-zA-Z0-9\s]*$', direc1)is not None):
                         oficina["telefono"] = direc1
                         break
                 else:
                     raise Exception("El id no comple con el estandar establecido")
 
             if (not oficina.get("linea_direccion2")):
-                direc2 = input("Ingrese la id de la transaccion: ")
-                if (re.match(r'^[A-Z][a-z][0-9]*\s*)$', direc2)is not None):
+                direc2 = input("Ingrese la linea de direccion 2: ")
+                if (re.match(r'^[A-Z][a-zA-Z0-9\s]*$', direc2)is not None):
                         oficina["telefono"] = direc2
                         break
                 else:
@@ -80,30 +80,69 @@ def postOficina():
     res["Mensaje"] = "Producto guardado"
     return res
 
+
+def updateOficina(id):
+    data = gO.getAllidOfi(id)
+    if data is None:
+            print(f"""
+
+Id de la oficina no encontrado. """)
+    
+    while True:
+        try:
+            print(tabulate(data, headers="keys", tablefmt="rounded_grid"))
+            print(f"""
+Datos para modificar: """)
+            for i, (val, asd) in enumerate(data[0].items()):
+                print(f"{i+1}. {val}")
+
+            opcion = int(input(f"""
+Seleccione una opción: """))
+            datoModificar = list(data[0].keys())[opcion - 1]
+            nuevoValor = input(f"""
+Ingrese el nuevo valor para {datoModificar}: """)
+            if datoModificar in data[0]:
+                data[0][datoModificar] = nuevoValor
+                print(tabulate(data[0], headers="keys", tablefmt="rounded_grid"))
+                break
+            else:
+                 print(f"""
+Seleccion incorrecta""")
+                
+        except ValueError as error:
+            print(error)
+    
+    peticion = requests.put(f"http://154.38.171.54:5005/oficinas/{id}", data=json.dumps(data[0], indent=4).encode("UTF-8"))
+    res = peticion.json()
+    res["Mensaje"] = "Oficina Modificado"
+    return [res]
+
+
 def deleteOficina(id):
     data = gO.getAllidOfi(id)
     if (len(data)):
         peticion = requests.delete(f"http://154.38.171.54:5005/oficinas/{id}")
-        if(peticion.status_code == 204):
-            data.append({"message" : "producto eliminado correctamente"})
-            return{
-                "data" : data,
-                "status" : peticion.status_code,
+        if peticion.status_code == 200:
+            data.append({"message": "producto eliminado correctamente"})
+            return {
+                "body": data, 
+                "status": peticion.status_code
             }
-    else : 
+        else:
+            return {
+                "body": [{"message": "Error al eliminar el producto"}],
+                "status": peticion.status_code
+            }
+    else:
         return {
-            "body" : [{
-                "menssage" : "producto no  encontrado",
-                "id": id
-            }],
-            "status" : 400
-        }
+            "body": [{"message": "Producto no encontrado", "id": id}],
+            "status": 404 }
     
     # peticion = requests.delete("http://172.16.104.23:5503/pedidos/{id}")
 #falta la url bien hecha ..
-    res = peticion.json()
-    res["Mensaje"] = "Producto eliminado"
-    return res
+    # res = peticion.json()
+    # res["Mensaje"] = "Producto eliminado"
+    # return res
 
 def menu():
     while True: 
@@ -118,7 +157,8 @@ def menu():
                                                                                                 
 
             1. Agregar una nueva oficina
-            2.Eliminar una oficina
+            2. Eliminar una oficina
+            3. Actualizar una oficina
             0. Salir
               
               """)
@@ -132,5 +172,10 @@ def menu():
             id = int(input("Ingrese el codigo del pedido que desea eleminar"))
             print(tabulate(deleteOficina(id), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
+        elif (opcion == 3):
+            idOfi = input("Ingrese el id de la oficina: ")
+            print(tabulate(updateOficina(idOfi), headers="keys", tablefmt='rounded_grid'))
+            input(f"""
+Escriba una tecla para continuar: """)
         elif (opcion == 0):
             break

@@ -12,7 +12,7 @@ def getAllDataPedidos():
     
 
 def getPedidoCodigo(codigo):
-    peticion = requests.get("http://172.16.104.23:5503/pedidos/{codigo}")
+    peticion = requests.get(f"http://172.16.104.23:5503/pedidos/{codigo}")
     #json-server storage/producto.json -b 5503
     return [peticion.json()] if peticion.ok else []
 

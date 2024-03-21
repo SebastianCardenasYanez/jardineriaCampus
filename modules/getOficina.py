@@ -10,7 +10,7 @@ def getAllDataOficina():
     return data
 
 def getAllidOfi(codigo):
-    peticion = requests.get("http://154.38.171.54:5005/oficinas/{codigo}")
+    peticion = requests.get(f"http://154.38.171.54:5005/oficinas/{codigo}")
     #json-server storage/producto.json -b 5501 
     return [peticion.json()] if peticion.ok else []
 
@@ -38,7 +38,7 @@ def getAllCiudadTelefono(pais):
 def menu():
     while True:
         print(""" 
-    ___                   _               _            __ _    _           
+     ___                   _               _            __ _    _           
     | _ \___ _ __  ___ _ _| |_ ___ ___  __| |___   ___ / _(_)__(_)_ _  __ _ 
     |   / -_| '_ \/ _ \ '_|  _/ -_|_-< / _` / -_| / _ \  _| / _| | ' \/ _` |
     |_|_\___| .__/\___/_|  \__\___/__/ \__,_\___| \___/_| |_\__|_|_||_\__,_|

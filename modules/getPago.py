@@ -10,7 +10,7 @@ def getAllDataPagos():
     return data
 
 def getAllidPagos(codigo):
-    peticion = requests.get("http://172.16.102.108:5501/productos/{codigo}")
+    peticion = requests.get(f"http://172.16.102.108:5501/productos/{codigo}")
     #json-server storage/producto.json -b 5501 
     return [peticion.json()] if peticion.ok else []
 

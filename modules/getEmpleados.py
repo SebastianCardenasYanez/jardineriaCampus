@@ -10,7 +10,7 @@ def getAllDataEmpleados():
     return data
 
 def getAllCodigoEmp(codigo):
-    peticion = requests.get("http://154.38.171.54:5003/empleados{codigo}")
+    peticion = requests.get(f"http://154.38.171.54:5003/empleados{codigo}")
     data = peticion.json()
     return data
 

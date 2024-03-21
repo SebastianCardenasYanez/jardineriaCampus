@@ -37,7 +37,7 @@ def postPago():
                     raise Exception("La fecha no comple con el estandar establecido")
                 
             if(not Pago.get("total")):
-                total = int(input("Ingrese el codigo del cliente que realizo el pago: "))
+                total = int(input("Ingrese el total del pago: "))
                 if total is not None:
                    Pago['codigo_producto'] = total
                 else : 
@@ -54,31 +54,72 @@ def postPago():
     res["Mensaje"] = "Producto guardado"
     return res
 
+def updatePagos(id):
+    data = gP.getAllidPagos(id)
+    if data is None:
+            print(f"""
 
-def deletePedido(id):
+Id del pago no encontrado. """)
+    
+    while True:
+        try:
+            print(tabulate(data, headers="keys", tablefmt="rounded_grid"))
+            print(f"""
+Datos para modificar: """)
+            for i, (val, asd) in enumerate(data[0].items()):
+                print(f"{i+1}. {val}")
+
+            opcion = int(input(f"""
+Seleccione una opción: """))
+            datoModificar = list(data[0].keys())[opcion - 1]
+            nuevoValor = input(f"""
+Ingrese el nuevo valor para {datoModificar}: """)
+            if datoModificar in data[0]:
+                if datoModificar == "total" or "codigo_cliente":
+                    data[0][datoModificar] = int(nuevoValor)
+                    break
+                else:
+                    data[0][datoModificar] = nuevoValor
+                    print(tabulate(data[0], headers="keys", tablefmt="rounded_grid"))
+                    break
+            else:
+                 print(f"""
+Seleccion incorrecta""")
+                
+        except ValueError as error:
+            print(error)
+    
+    peticion = requests.put(f"http://154.38.171.54:5006/pagos/{id}", data=json.dumps(data[0], indent=4).encode("UTF-8"))
+    res = peticion.json()
+    res["Mensaje"] = "Pago Modificado"
+    return [res]
+
+
+def deletePago(id):
     data = gP.getAllidPagos(id)
     if (len(data)):
         peticion = requests.delete(f"http://154.38.171.54:5006/pagos{id}")
-        if(peticion.status_code == 204):
-            data.append({"message" : "producto eliminado correctamente"})
-            return{
-                "data" : data,
-                "status" : peticion.status_code,
+        if peticion.status_code == 200:
+            data.append({"message": "producto eliminado correctamente"})
+            return {
+                "body": data, 
+                "status": peticion.status_code
             }
-    else : 
+        else:
+            return {
+                "body": [{"message": "Error al eliminar el producto"}],
+                "status": peticion.status_code
+            }
+    else:
         return {
-            "body" : [{
-                "menssage" : "producto no  encontrado",
-                "id": id
-            }],
-            "status" : 400
-        }
+            "body": [{"message": "Producto no encontrado", "id": id}],
+            "status": 404 }
     
     # peticion = requests.delete("http://172.16.104.23:5503/pedidos/{id}")
 #falta la url bien hecha ..
-    res = peticion.json()
-    res["Mensaje"] = "Producto eliminado"
-    return res
+    # res = peticion.json()
+    # res["Mensaje"] = "Producto eliminado"
+    # return res
 
 def menu():
     while True: 
@@ -106,7 +147,12 @@ def menu():
             break
         elif (opcion==2):
             id = input("Ingrese el id del pago que desea eliminar")
-            print(tabulate(deletePedido(id), headers="keys",  tablefmt = 'rounded_grid'))
+            print(tabulate(deletePago(id), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
+        elif (opcion ==3):
+            idPedido = input("Ingrese el id del Pedido: ")
+            print(tabulate(updatePagos(idPedido), headers="keys", tablefmt='rounded_grid'))
+            input(f"""
+Escriba una tecla para continuar: """)
         elif (opcion == 0):
             break
