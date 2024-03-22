@@ -35,7 +35,7 @@ def getProductoCodigo2 (codigo):
 def getAllStockPriceGama (gama, stock):
     condiciones =[]
     for val in getAllData():
-        if (val.get("gama") == gama and val.get("cantidad_en_stock") >= stock):
+        if (val.get("gama") == gama and val.get("cantidadEnStock") >= stock):
             condiciones.append(val)
             
             # condiciones.append({
@@ -58,7 +58,7 @@ def getAllStockPriceGama (gama, stock):
             "dimensiones" : val.get("dimensiones"),
             "proveedor": val.get("proveedor"), 
             "descripcion": f'(val.get("descripcion")[15])...' if condiciones[1].get("descripcion") else None,
-            "stock": val.get("cantidad_en_stock"),
+            "stock": val.get("cantidadEnStock"),
             "base" : val.get("precio_proveedor")
         }
         # if val.get("precio_venta") != None:
@@ -94,8 +94,10 @@ def menu():
             gama = input("Ingrese la gama que deseas filtrar : ")
             stock = int(input("Ingrese las unidades que deseas mostrar : "))
             print(tabulate(getAllStockPriceGama (gama, stock), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion==2): 
             postPro.menu()
         elif(opcion == 0):
             break
+        input("presione una tecla para continuar")
+        break

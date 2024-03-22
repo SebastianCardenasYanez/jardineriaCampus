@@ -75,11 +75,13 @@ def menu():
         opcion = int(input("\nSeleccione una de las opciones: "))
         if (opcion == 1):
             print(tabulate(getAllNombresApellidosEmailJefe(1), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 2):
             print(tabulate(getAllPuestoNombreApellidosEmpleados("Representante Ventas"), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif(opcion == 3):
             postEmp.menu()
         elif (opcion == 0):
             break
+        input("presione una tecla para continuar")
+        break

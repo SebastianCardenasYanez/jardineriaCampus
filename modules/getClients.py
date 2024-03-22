@@ -207,7 +207,7 @@ def menu():
         opcion = int(input("\nSeleccione una de las opciones: "))
         if (opcion == 1):
             print(tabulate(getAllClientName(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 2):
             try:
                 entrada = input("Ingresa Ctrl + c para ir a menu: ")
@@ -215,7 +215,7 @@ def menu():
                 menu()
             codigo = int(input("Ingrese el codigo del cliente: "))
             print(tabulate(getOneClientCodigo(codigo), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 3):
             try:
                 entrada = input("Ingresa Ctrl + c para ir a menu: ")
@@ -224,7 +224,7 @@ def menu():
             limite = float(input("ingrese el limite de credito de los clientes vque deseas visualisar: "))
             ciudad = input("ingrese el nomnbre de la ciudad que deseas filtrar los cliente:")
             print(tabulate(getAllCLientCreditCiudad(limite, ciudad), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 4):
             try:
                 entrada = input("Ingresa Ctrl + c para ir a menu: ")
@@ -234,19 +234,19 @@ def menu():
             region = input("Ingrese la region: ")
             ciudad = input("Ingrese la cudad: ")
             print(tabulate(getAllClientPaisRegionCiudad(pais, region, ciudad), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 5):
             print(tabulate(getAllClienteCodigoPostal(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 6):
             print(tabulate(getAllClienteFax(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 7):
             print(tabulate(getAllClientePhone(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 8):
             print(tabulate(getAllClienteContactoDatos(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 9):
             try:
                 entrada = input("Ingresa Ctrl + c para ir a menu: ")
@@ -254,7 +254,7 @@ def menu():
                 menu()
             repVentas = int(input("Ingrese el codigo del representante de ventas: "))
             print(tabulate(getAllClienteRepVentas(repVentas), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 10):
             try:
                 entrada = input("Ingresa Ctrl + c para ir a menu: ")
@@ -263,20 +263,22 @@ def menu():
             codigoCliente = int(input("Ingrese el codigo del cliente: "))
             Spain = input("Ingrese el pais: ")
             print(tabulate(getAllClienteNombrePais(Spain), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 11):
             print(tabulate(getAllClienteMadridCodigo(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 12):
             print(tabulate(getAllClienteNombreRepVentas(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 13):
             print(tabulate(getAllCLientePago(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 14):
             print(tabulate(getAllCLienteNoPago(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif(opcion == 15):
             postCli.menu()
         elif (opcion == 0):
             break
+        input("presione una tecla para continuar")
+        break

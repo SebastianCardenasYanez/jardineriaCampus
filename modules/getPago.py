@@ -11,7 +11,7 @@ def getAllDataPagos():
     return data
 
 def getAllidPagos(codigo):
-    peticion = requests.get(f"http://172.16.102.108:5501/productos/{codigo}")
+    peticion = requests.get(f" http://154.38.171.54:5008/productos{codigo}")
     #json-server storage/producto.json -b 5501 
     return [peticion.json()] if peticion.ok else []
 
@@ -25,7 +25,7 @@ def getAllCodigoClienteAñoPago() :
         if año.startswith("2008"):
             codigoPago.add(val.get('fecha_pago'))
             codigoPago.add(val.get('codigo_cliente'))
-    return codigoPago
+    return [codigoPago]
         
 #ejercicio 13
 def getAllFormaDePago2008() :
@@ -76,9 +76,11 @@ def menu():
         elif (opcion==2):
             print(tabulate(getAllFormaDePago2008(), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
+            break
         elif (opcion==3):
             print(tabulate(getAllFormaPago(), headers="keys",  tablefmt = 'rounded_grid'))
             input("Precione una tecla para continuar....")
+            break
         elif (opcion == 4):
             postPago.menu()
         elif (opcion == 0):

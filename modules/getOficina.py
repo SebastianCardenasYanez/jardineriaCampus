@@ -54,12 +54,14 @@ def menu():
         opcion = int(input("\nSeleccione una de las opciones: "))
         if (opcion == 1):
             print(tabulate(getAllCodigoCiudad(), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 2):
             print(tabulate(getAllCiudadTelefono("España"), headers="keys",  tablefmt = 'rounded_grid'))
-            break
+            #break
         elif (opcion == 3):
             postOfi.menu()
         elif (opcion == 0):
             break
+        input("presione una tecla para continuar")
+        break
     
